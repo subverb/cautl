@@ -1,0 +1,35 @@
+#!/usr/bin/ruby
+
+require 'optparse'
+require 'openssl'
+
+opt = { :section => "default" }
+
+OptionParser.new do |o|
+	o.banner = "Usage: #{$0} [options]"
+
+	o.on("-f", "--filename", "=MANDATORY", "Use configuration filename") do |f|
+		opt[:filename] = f
+	end
+
+	o.on("-s", "--section", "=MANDATORY", "section to read from") do |s|
+		opt[:section] = s
+	end
+
+	o.on("-k", "--key", "=MANDATORY", "key to read") do |k|
+		opt[:key] = k
+	end
+
+	o.on("-h", "--help", "print this help") do
+		puts o
+		exit 1
+	end
+end.parse!
+
+if opt[:key].nil?
+	puts "no key given"
+	exit 1
+end
+
+config = OpenSSL::Config.new(opt[:filename]);
+puts config.get_value(opt[:section], opt[:key]);
