@@ -76,7 +76,7 @@ caIssuers;URI.0         = $aia_url
 OCSP;URI.0              = $ocsp_url
 
 [name_constraints]
-permitted;DNS.0=${CA_DOMAIN}
+permitted;DNS.0=${ENV::CA_DOMAIN}
 excluded;IP.0=0.0.0.0/0.0.0.0
 excluded;IP.1=0:0:0:0:0:0:0:0/0:0:0:0:0:0:0:0
 
