@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "$SUBVERB" ]; then
+	SUBVERB=$(which subverb)
+fi
+
+if [ -z "$SUBVERB" -a -x "subverb/subverb" ]; then
+	SUBVERB="./subverb/subverb"
+fi
+
+if [ -z "$SUBVERB" ]; then
+	echo "subverb not found"
+	exit 1
+fi
+
+echo running suberb in dev-mode
+export CAUTL_SYSCONFIG=etc/cautl
+export CAUTL_SHARED_DIR=share
+export CAUTL_SUBCMD_DIR=lib/subverb
+export PATH=$PATH:bin/
+
+. $SUBVERB
+
