@@ -1,19 +1,19 @@
 [default]
-name                    = root-ca
-domain_suffix           = example.com
+name                    = $ENV::CA_NAME
+domain_suffix           = $ENV::CA_DOMAIN
 aia_url                 = http://$name.$domain_suffix/$name.crt
 crl_url                 = http://$name.$domain_suffix/$name.crl
-ocsp_url                = http://ocsp.$name.$domain_suffix:9080
+ocsp_url                = http://ocsp.$name.$domain_suffix:${ENV::CA_OCSP_PORT}
 default_ca              = ca_default
 name_opt                = utf8,esc_ctrl,multiline,lname,align
 
 [ca_dn]
-countryName             = "GB"
-organizationName        = "Example"
-commonName              = "Root CA"
+countryName             = ${ENV::CA_COUNTRY}
+organizationName        = ${ENV::CA_ORG}
+commonName              = ${ENV::CA_COMMONNAME}
 
 [ca_default]
-home                    = $ENV::CAHOME
+home                    = $ENV::CA_HOME
 database		= $home/index.txt	# database index file.
 serial			= $home/serial 		# The current serial number
 crlnumber		= $home/crlnumber	# the current crl number
@@ -30,8 +30,8 @@ crl			= $home/crl.pem 	# The current CRL
 
 unique_subject          = no
 copy_extensions         = none
-default_days            = 3650
-default_crl_days        = 365
+default_days            = ${ENV::CA_VLD_DAYS}
+default_crl_days        = ${ENV::CA_VLD_DAYS_CRL}
 default_md              = sha256
 policy                  = policy_c_o_match
 
@@ -44,7 +44,7 @@ commonName              = supplied
 emailAddress            = optional
 
 [req]
-default_bits            = 4096
+default_bits            = ${ENV::CA_BITSIZE}
 encrypt_key             = yes
 default_md              = sha256
 utf8                    = yes
@@ -76,8 +76,7 @@ caIssuers;URI.0         = $aia_url
 OCSP;URI.0              = $ocsp_url
 
 [name_constraints]
-permitted;DNS.0=example.com
-permitted;DNS.1=example.org
+permitted;DNS.0=${CA_DOMAIN}
 excluded;IP.0=0.0.0.0/0.0.0.0
 excluded;IP.1=0:0:0:0:0:0:0:0/0:0:0:0:0:0:0:0
 

@@ -1,1 +1,10 @@
-export CAHOME=$HOME/.cautl
+export CA_HOME=$HOME/.cautl
+export CA_NAME=exp
+export CA_DOMAIN=example.com
+export CA_COUNTRY=DE
+export CA_ORG=Example
+export CA_COMMONNAME="CA for example"
+export CA_OCSP_PORT=9080
+export CA_BITSIZE=2048
+export CA_VLD_DAYS=365
+export CA_VLD_DAYS_CRL=90
