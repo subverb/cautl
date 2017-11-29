@@ -13,7 +13,7 @@ organizationName        = "Example"
 commonName              = "Root CA"
 
 [ca_default]
-home                    = .
+home                    = $ENV::CAHOME
 database                = $home/db/index
 serial                  = $home/db/serial
 crlnumber               = $home/db/crlnumber
