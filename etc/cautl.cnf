@@ -14,13 +14,20 @@ commonName              = "Root CA"
 
 [ca_default]
 home                    = $ENV::CAHOME
-database                = $home/db/index
-serial                  = $home/db/serial
-crlnumber               = $home/db/crlnumber
-certificate             = $home/$name.crt
-private_key             = $home/private/$name.key
-RANDFILE                = $home/private/random
-new_certs_dir           = $home/certs
+database		= $home/index.txt	# database index file.
+serial			= $home/serial 		# The current serial number
+crlnumber		= $home/crlnumber	# the current crl number
+certificate		= $home/cacert.pem 	# The CA certificate
+private_key		= $home/private/$name.pem# The private key
+RANDFILE		= $home/private/.rand	# private random number file
+new_certs_dir		= $home/newcerts	# default place for new certs.
+
+certs			= $home/certs		# Where the issued certs are kept
+crl_dir			= $home/crl		# Where the issued crl are kept
+
+						# must be commented out to leave a V1 CRL
+crl			= $home/crl.pem 	# The current CRL
+
 unique_subject          = no
 copy_extensions         = none
 default_days            = 3650
