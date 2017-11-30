@@ -1,0 +1,1 @@
+ls $($GETCACONF -k certs)
