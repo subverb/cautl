@@ -1,9 +1,5 @@
-GETCONF="openssl_getconf -f $OPENSSL_CONF" 
-DEFAULTCA=$($GETCONF -k default_ca)
-GETCONF="$GETCONF -s $DEFAULTCA"
-
 for i in new_certs_dir certs crl_dir; do
-	DIR=$($GETCONF -k "$i")
+	DIR=$($GETCACONF -k "$i")
 	test "$DIR" || continue
 	if [ ! -d "$DIR" ]; then
 		echo creating $i: $DIR
@@ -12,7 +8,7 @@ for i in new_certs_dir certs crl_dir; do
 done
 
 for i in database serial crlnumber certificate private_key RANDFILE crl; do
-	FILE=$($GETCONF -k "$i")
+	FILE=$($GETCACONF -k "$i")
 	test "$FILE" || continue
 	DIR=$(dirname $FILE)
 
