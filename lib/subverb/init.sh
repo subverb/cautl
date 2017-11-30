@@ -1,3 +1,7 @@
+SV_OPTION[root-ca]=":INIT_ROOT_CA"
+
+sv_parse_options "$@"
+
 for i in new_certs_dir certs crl_dir; do
 	DIR=$($GETCACONF -k "$i")
 	test "$DIR" || continue
@@ -36,5 +40,20 @@ for i in database serial crlnumber certificate private_key RANDFILE crl; do
 done
 
 test -d ~/.cautl && touch ~/.cautl/cautl.conf
+
+check_or_subverb() {
+	FILE=$($GETCACONF -k $1)
+	echo "Checking $FILE"
+	if [ ! -f "$FILE" ]; then
+		echo "Calling $2"
+		sv_call_subverb $2
+	fi
+}
+
+if [ "$INIT_ROOT_CA" == "1" ]; then
+	check_or_subverb private_key gencsr
+	check_or_subverb certificate selfsign
+	check_or_subverb crl gencrl
+fi
 
 echo Done
