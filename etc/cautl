@@ -5,6 +5,12 @@ export CA_COUNTRY=DE
 export CA_ORG=Example
 export CA_COMMONNAME="CA for example"
 export CA_OCSP_PORT=9080
-export CA_BITSIZE=2048
+export CA_BITSIZE=4096
 export CA_VLD_DAYS=365
 export CA_VLD_DAYS_CRL=90
+
+## for subca, uncomment the following lines
+# export CAUTL_SYSCONFIG=cautl_subca
+# export CA_OCSP_PORT=9081
+# export CA_BITSIZE=2048 # or 3062
+
