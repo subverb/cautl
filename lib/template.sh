@@ -14,9 +14,14 @@ trap_add() {
 declare -f -t trap_add
 
 parse_template() {
+	BASEDIR=${1:-.}
 	while read line; do
 		if [[ "$line" =~ $includere ]]; then
-			parse_template < "${BASH_REMATCH[1]}"
+			FILE=${BASH_REMATCH[1]}
+			if [ "${FILE:0:1}" != "/" ]; then
+				FILE="$BASEDIR/$FILE"
+			fi
+			parse_template < "$FILE"
 			continue
 		fi
 	       	while [[ "$line" =~ $setre ]]; do
@@ -36,6 +41,6 @@ parse_template() {
 template2tempfile() {
 	filename=$(mktemp --tmpdir cautl_XXXXXXXX.cnf)
 	echo "$SV_DEBUG" | grep -q "keep_cnf" || trap_add "rm $filename" EXIT
-	parse_template >$filename
+	parse_template "$@" >$filename
 	echo $filename
 }
