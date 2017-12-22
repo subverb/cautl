@@ -14,3 +14,7 @@ export CA_VLD_DAYS_CRL=90
 # export CA_OCSP_PORT=9081
 # export CA_BITSIZE=2048 # or 3062
 
+## for client application, uncomment the following lines
+# export CAUTL_SYSCONFIG=cautl_client
+# export CA_BITSIZE=2048 # or 3062
+
