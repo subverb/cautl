@@ -1,0 +1,45 @@
+[default]
+name                    = <<CA_NAME>>
+domain_suffix           = <<CA_DOMAIN>>
+aia_url                 = http://$name.$domain_suffix/$name.crt
+crl_url                 = http://$name.$domain_suffix/$name.crl
+ocsp_url                = http://ocsp.$name.$domain_suffix:<<CA_OCSP_PORT>>
+default_ca              = ca_default
+name_opt                = utf8,esc_ctrl,multiline,lname,align
+
+[ca_dn]
+countryName             = <<CA_COUNTRY>>
+organizationName        = <<CA_ORG>>
+commonName              = <<CA_COMMONNAME>>
+
+[ca_default]
+home                    = <<CA_HOME>>
+database		= $home/index.txt	# database index file.
+serial			= $home/serial 		# The current serial number
+crlnumber		= $home/crlnumber	# the current crl number
+certificate		= $home/cacert.pem 	# The CA certificate
+private_key		= $home/private/$name.pem# The private key
+RANDFILE		= $home/private/.rand	# private random number file
+new_certs_dir		= $home/newcerts	# default place for new certs.
+
+certs			= $home/certs		# Where the issued certs are kept
+crl_dir			= $home/crl		# Where the issued crl are kept
+
+						# must be commented out to leave a V1 CRL
+crl			= $home/crl.pem 	# The current CRL
+
+unique_subject          = no
+copy_extensions         = none
+default_days            = <<CA_VLD_DAYS>>
+default_crl_days        = <<CA_VLD_DAYS_CRL>>
+default_md              = sha256
+policy                  = policy_c_o_match
+
+[policy_c_o_match]
+countryName             = match
+stateOrProvinceName     = optional
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
