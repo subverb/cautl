@@ -42,5 +42,11 @@ template2tempfile() {
 	filename=$(mktemp --tmpdir cautl_XXXXXXXX.cnf)
 	echo "$SV_DEBUG" | grep -q "keep_cnf" || trap_add "rm $filename" EXIT
 	parse_template "$@" >$filename
-	echo $filename
+	declare -g CAUTL_GENERATED_FILE=$filename
+}
+
+generate_configfile() {
+	file=${1:-default}.cnf
+	DATADIR=$(sv_default_dir pkgdata)
+	template2tempfile $DATADIR < $DATADIR/${file}
 }

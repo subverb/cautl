@@ -18,8 +18,7 @@ if [ -n "$CA_KEEP" -o -n "$CA_FILE" ]; then
 	export SV_DEBUG="$SV_DEBUG,keep_cnf"
 fi
 
-DATADIR=$(sv_default_dir pkgdata)
-CAUTL_GENERATED_FILE=$(template2tempfile $DATADIR < $DATADIR/${CAUTL_GROUP}.cnf)
+generate_configfile ${CAUTL_GROUP}
 
 if [ -n "$CA_FILE" ]; then
 	mv "$CAUTL_GENERATED_FILE" "$CA_FILE"
