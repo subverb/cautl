@@ -1,19 +1,19 @@
 [default]
-name                    = $ENV::CA_NAME
-domain_suffix           = $ENV::CA_DOMAIN
+name                    = <<CA_NAME>>
+domain_suffix           = <<CA_DOMAIN>>
 aia_url                 = http://$name.$domain_suffix/$name.crt
 crl_url                 = http://$name.$domain_suffix/$name.crl
-ocsp_url                = http://ocsp.$name.$domain_suffix:${ENV::CA_OCSP_PORT}
+ocsp_url                = http://ocsp.$name.$domain_suffix:<<CA_OCSP_PORT>>
 default_ca              = ca_default
 name_opt                = utf8,esc_ctrl,multiline,lname,align
 
 [ca_dn]
-countryName             = ${ENV::CA_COUNTRY}
-organizationName        = ${ENV::CA_ORG}
-commonName              = ${ENV::CA_COMMONNAME}
+countryName             = <<CA_COUNTRY>>
+organizationName        = <<CA_ORG>>
+commonName              = <<CA_COMMONNAME>>
 
 [ca_default]
-home                    = $ENV::CA_HOME
+home                    = <<CA_HOME>>
 database		= $home/index.txt	# database index file.
 serial			= $home/serial 		# The current serial number
 crlnumber		= $home/crlnumber	# the current crl number
@@ -29,9 +29,9 @@ crl_dir			= $home/crl		# Where the issued crl are kept
 crl			= $home/crl.pem 	# The current CRL
 
 unique_subject          = no
-copy_extensions         = copy
-default_days            = ${ENV::CA_VLD_DAYS}
-default_crl_days        = ${ENV::CA_VLD_DAYS_CRL}
+copy_extensions         = none
+default_days            = <<CA_VLD_DAYS>>
+default_crl_days        = <<CA_VLD_DAYS_CRL>>
 default_md              = sha256
 policy                  = policy_c_o_match
 
@@ -42,30 +42,4 @@ organizationName        = match
 organizationalUnitName  = optional
 commonName              = supplied
 emailAddress            = optional
-
-[req]
-default_bits            = ${ENV::CA_BITSIZE}
-encrypt_key             = yes
-default_md              = sha256
-utf8                    = yes
-string_mask             = utf8only
-prompt                  = no
-distinguished_name      = ca_dn
-req_extensions          = ca_ext
-
-[ca_ext]
-authorityInfoAccess     = @issuer_info
-authorityKeyIdentifier  = keyid:always
-basicConstraints        = critical,CA:true,pathlen:0
-crlDistributionPoints   = @crl_info
-extendedKeyUsage        = clientAuth
-keyUsage                = critical,digitalSignature
-subjectKeyIdentifier    = hash
-
-[crl_info]
-URI.0                   = $crl_url
-
-[issuer_info]
-caIssuers;URI.0         = $aia_url
-OCSP;URI.0              = $ocsp_url
 

@@ -1,0 +1,46 @@
+<<include base.cnf>>
+
+[req]
+default_bits            = <<CA_BITSIZE>>
+encrypt_key             = yes
+default_md              = sha256
+utf8                    = yes
+string_mask             = utf8only
+prompt                  = no
+distinguished_name      = ca_dn
+req_extensions          = ca_ext
+
+[ca_ext]
+basicConstraints        = critical,CA:true
+keyUsage                = critical,keyCertSign,cRLSign
+subjectKeyIdentifier    = hash
+
+[sub_ca_ext]
+authorityInfoAccess     = @issuer_info
+authorityKeyIdentifier  = keyid:always
+basicConstraints        = critical,CA:true,pathlen:0
+crlDistributionPoints   = @crl_info
+extendedKeyUsage        = clientAuth,serverAuth,1.3.6.1.5.5.8.2.2
+keyUsage                = critical,keyCertSign,cRLSign
+nameConstraints         = @name_constraints
+subjectKeyIdentifier    = hash
+
+[crl_info]
+URI.0                   = $crl_url
+
+[issuer_info]
+caIssuers;URI.0         = $aia_url
+OCSP;URI.0              = $ocsp_url
+
+[name_constraints]
+permitted;DNS.0=<<CA_DOMAIN>>
+excluded;IP.0=0.0.0.0/0.0.0.0
+excluded;IP.1=0:0:0:0:0:0:0:0/0:0:0:0:0:0:0:0
+
+[ocsp_ext]
+authorityKeyIdentifier  = keyid:always
+basicConstraints        = critical,CA:false
+extendedKeyUsage        = OCSPSigning
+noCheck                 = yes
+keyUsage                = critical,digitalSignature
+subjectKeyIdentifier    = hash

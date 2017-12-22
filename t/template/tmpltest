@@ -1,0 +1,6 @@
+HOME <<HOME>>
+<<include tmplincluded>>
+<<include nonexistent>>
+<<FOO=BAR>>
+<<FOO>>
+
