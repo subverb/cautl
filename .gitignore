@@ -1,1 +1,11 @@
+# editor temporary
 .*.sw[po]
+
+# build environment
+/configure
+Makefile
+Makefile.in
+/aclocal.m4
+/autom4te.cache/
+/install-sh
+/missing
