@@ -24,3 +24,5 @@ export CA_VLD_DAYS_CRL=90
 ## disable  email in dn
 # export NO_EMAIL_DN=1
 
+## enable authoritive Key Identifier
+# export AUTHORITY_KEY_IDENTIFIER=1

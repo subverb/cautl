@@ -12,7 +12,9 @@ req_extensions          = ca_ext
 
 [ca_ext]
 authorityInfoAccess     = @issuer_info
+<<if [ "0$AUTHORITY_KEY_IDENTIFIER" -gt 0 ]>>
 authorityKeyIdentifier  = keyid:always
+<<end>>
 basicConstraints        = critical,CA:true,pathlen:0
 crlDistributionPoints   = @crl_info
 extendedKeyUsage        = clientAuth
