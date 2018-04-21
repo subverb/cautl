@@ -11,6 +11,9 @@ name_opt                = utf8,esc_ctrl,multiline,lname,align
 [ca_dn]
 countryName             = <<CA_COUNTRY>>
 organizationName        = <<CA_ORG>>
+<<if [ -n "$CA_OU" ]>>
+organizationalUnitName  = <<CA_OU>>
+<<end>>
 commonName              = <<CA_COMMONNAME>>
 
 [ca_default]
@@ -35,6 +38,10 @@ default_days            = <<CA_VLD_DAYS>>
 default_crl_days        = <<CA_VLD_DAYS_CRL>>
 default_md              = sha256
 policy                  = policy_c_o_match
+
+<<if [ "0$NO_ENAIL_DN" -gt 0 ]>>
+email_in_dn		= no
+<<end>>
 
 [policy_c_o_match]
 countryName             = match

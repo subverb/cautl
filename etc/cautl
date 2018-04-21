@@ -4,6 +4,8 @@ export CA_HOST=$CA_NAME
 export CA_DOMAIN=example.com
 export CA_COUNTRY=DE
 export CA_ORG=Example
+## optional organizationalUnit
+# export CA_OU=unit
 export CA_COMMONNAME="CA for example"
 export CA_OCSP_PORT=9080
 export CA_BITSIZE=4096
@@ -18,4 +20,7 @@ export CA_VLD_DAYS_CRL=90
 ## for client application, uncomment the following lines
 # export CAUTL_GROUP=client
 # export CA_BITSIZE=2048 # or 3062
+
+## disable  email in dn
+# export NO_EMAIL_DN=1
 
