@@ -4,3 +4,35 @@ HOME <<HOME>>
 <<FOO=BAR>>
 <<FOO>>
 
+preface
+<<if true>>
+outer if (true)
+	<<if [ 1 -ne 0 ]>>
+	inner if (true:true)
+	<<else>>
+	inner else (true:false)
+	<<end>>
+<<else>>
+outer else (false)
+	<<if [ 1 -ne 0 ]>>
+	inner if (false:true)
+	<<else>>
+	inner else (false:false)
+	<<end>>
+<<end>>
+<<if false>>
+outer if (false)
+	<<if [ 1 -ne 0 ]>>
+	inner if (false:true)
+	<<else>>
+	inner else (false:false)
+	<<end>>
+<<else>>
+outer else (true)
+	<<if [ 1 -ne 0 ]>>
+	inner if (true:true)
+	<<else>>
+	inner else (true:false)
+	<<end>>
+<<end>>
+postface
