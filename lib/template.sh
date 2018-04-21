@@ -1,6 +1,7 @@
 regex='<<([a-zA-Z_][a-zA-Z_0-9]*)>>'
 includere='^<<include ([a-zA-Z_0-9.]+)>>'
 setre='^<<([a-zA-Z_][a-zA-Z_0-9]+)=([^>]*)>>'
+spaceonlyre='^\s*$'
 
 trap_add() {
 	cmd=$1
@@ -15,6 +16,9 @@ declare -f -t trap_add
 
 _parse_line() {
 	declare line="$1"
+	if [[ "$line" =~ $spaceonlyre ]]; then
+		return
+	fi
 	if [[ "$line" =~ $includere ]]; then
 		FILE=${BASH_REMATCH[1]}
 		if [ "${FILE:0:1}" != "/" ]; then
