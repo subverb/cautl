@@ -1,4 +1,5 @@
 export UTF8=1
+export NAMED_CONSTRAINTS=1
 CAUTL_GROUP=${CAUTL_GROUP:-default}
 
 SV_OPTION=(

@@ -29,3 +29,11 @@ export CA_VLD_DAYS_CRL=90
 
 ## disable utf8 support
 # export UTF8=0
+
+## modify name constraints
+## any combination of the following is possible - combined by adding the numbers
+## 0: disable
+## 1: allow certificates only for the current domain (default)
+## 2: disallow IPv4 addresses
+## 4: disallow IPv6 addresses
+# export NAMED_CONSTRAINTS=1
