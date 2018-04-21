@@ -4,8 +4,12 @@
 default_bits            = <<CA_BITSIZE>>
 encrypt_key             = yes
 default_md              = sha256
+<<if [ "$UTF8" -gt 0 ]>>
 utf8                    = yes
 string_mask             = utf8only
+<<else>>
+string_mask             = nombstr
+<<end>>
 prompt                  = no
 distinguished_name      = ca_dn
 req_extensions          = ca_ext

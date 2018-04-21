@@ -1,3 +1,4 @@
+export UTF8=1
 CAUTL_GROUP=${CAUTL_GROUP:-default}
 
 SV_OPTION=(

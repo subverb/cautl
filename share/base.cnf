@@ -6,7 +6,11 @@ aia_url                 = http://$host.$domain_suffix/$name.crt
 crl_url                 = http://$host.$domain_suffix/$name.crl
 ocsp_url                = http://ocsp.$host.$domain_suffix:<<CA_OCSP_PORT>>
 default_ca              = ca_default
+<<if [ "$UTF8" -gt 0 ]>>
 name_opt                = utf8,esc_ctrl,multiline,lname,align
+<<else>>
+name_opt                = esc_ctrl,multiline,lname,align
+<<end>>
 
 [ca_dn]
 countryName             = <<CA_COUNTRY>>
