@@ -13,28 +13,33 @@ trap_add() {
 }
 declare -f -t trap_add
 
+_parse_line() {
+	declare line="$1"
+	if [[ "$line" =~ $includere ]]; then
+		FILE=${BASH_REMATCH[1]}
+		if [ "${FILE:0:1}" != "/" ]; then
+			FILE="$BASEDIR/$FILE"
+		fi
+		parse_template < "$FILE"
+		return
+	fi
+	while [[ "$line" =~ $setre ]]; do
+		param="${BASH_REMATCH[1]}"
+		value="${BASH_REMATCH[2]}"
+		eval "$param=\"$value\""
+		line="${line//${BASH_REMATCH[0]}/}"
+	done
+	while [[ "$line" =~ $regex ]]; do
+		param="${BASH_REMATCH[1]}"
+		line="${line//${BASH_REMATCH[0]}/${!param}}"
+	done
+	echo "$line"
+}
+
 parse_template() {
 	BASEDIR=${1:-.}
 	while read line; do
-		if [[ "$line" =~ $includere ]]; then
-			FILE=${BASH_REMATCH[1]}
-			if [ "${FILE:0:1}" != "/" ]; then
-				FILE="$BASEDIR/$FILE"
-			fi
-			parse_template < "$FILE"
-			continue
-		fi
-	       	while [[ "$line" =~ $setre ]]; do
-			param="${BASH_REMATCH[1]}"
-			value="${BASH_REMATCH[2]}"
-			eval "$param=\"$value\""
-			line="${line//${BASH_REMATCH[0]}/}"
-		done
-	       	while [[ "$line" =~ $regex ]]; do
-			param="${BASH_REMATCH[1]}"
-			line="${line//${BASH_REMATCH[0]}/${!param}}"
-		done
-		echo "$line"
+		_parse_line "$line"
 	done
 }
 
