@@ -1,0 +1,7 @@
+/debhelper-build-stamp
+/files
+/cautl*.substvars
+/cautl*/
+/tmp/
+/autoreconf.before
+/autoreconf.after

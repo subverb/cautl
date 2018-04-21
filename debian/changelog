@@ -1,0 +1,6 @@
+cautl (1.0.0+nmu1) UNRELEASED; urgency=medium
+  
+  * local package
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Sat, 14 Apr 2018 20:45:24 +0200
