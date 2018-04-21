@@ -9,4 +9,4 @@ if [ -z "$CSR" ]; then
 	exit 1
 fi
 
-openssl ca -config $OPENSSL_CONF -in $NEWCSRDIR/$CSR -out $CERT -passin file:${PRIVKEY}.pwd -extensions ${CAUTL_CA_EXTENSION-subca_ext} ${CAUTL_CA_ARG}
+openssl ca -config $OPENSSL_CONF -in $NEWCSRDIR/$CSR -out $CERT -passin file:${PRIVKEY}.pwd -extensions ${CAUTL_CA_EXTENSION-sub_ca_ext} ${CAUTL_CA_ARG}
