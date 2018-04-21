@@ -38,6 +38,9 @@ crlDistributionPoints   = @crl_info
 extendedKeyUsage        = clientAuth
 keyUsage                = critical,digitalSignature
 subjectKeyIdentifier    = hash
+<<if [ -n "$SIGN_PRESENT" ]>>
+subjectAltName		= @sans
+<<end>>
 <<if [ "0$NAMED_CONSTRAINTS" -gt 0 ]>>
 nameConstraints         = @name_constraints
 <<end>>
@@ -53,6 +56,17 @@ excluded;IP.0=0.0.0.0/0.0.0.0
 <<if [ $(($NAMED_CONSTRAINTS & 4)) -gt 0 ]>>
 excluded;IP.1=0:0:0:0:0:0:0:0/0:0:0:0:0:0:0:0
 <<end>>
+<<end>>
+
+[sans]
+<<if [ -n "$SIGN_HOST" ]>>
+DNS.0=<<SIGN_HOST>>.<<CA_DOMAIN>>
+<<end>>
+<<if [ -n "$SIGN_FQDN" ]>>
+DNS.1=<<SIGN_FQDN>>
+<<end>>
+<<if [ -n "$SIGN_SAN" ]>>
+<<SIGN_SAN>>
 <<end>>
 
 [crl_info]

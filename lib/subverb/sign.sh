@@ -3,6 +3,19 @@ PRIVKEY=$($GETCACONF -k private_key)
 
 SV_OPTION[certificate]="CERT"
 
+SV_OPTION[subject-alt-name]="SIGN_SAN"
+SV_SHORT_OPTION[n]="SIGN_SAN"
+SV_OPTION_HELP[SIGN_SAN]="provide a subjectAltName (must contain the type prefix)"
+
+SV_OPTION[host]="SIGN_HOST"
+SV_SHORT_OPTION[h]="SIGN_HOST"
+SV_OPTION_HELP[SIGN_HOST]="provide a hostname (relative to the current domain)"
+
+SV_OPTION[fqdn-host]="SIGN_FQDN"
+SV_SHORT_OPTION[H]="SIGN_FQDN"
+SV_OPTION_HELP[SIGN_FQDN]="provide a (fqdn) hostname"
+
+
 sv_parse_options "$@"
 
 CSR="${SV_UNPARSED[0]}"
@@ -23,4 +36,10 @@ if [ -z "$CERT" ]; then
 	CERT=$($GETCACONF -k certs)/$CSR
 fi
 
-openssl ca -config $OPENSSL_CONF -in $NEWCSRDIR/$CSR -out $CERT -passin file:${PRIVKEY}.pwd -extensions ${CAUTL_CA_EXTENSION-sub_ca_ext} ${CAUTL_CA_ARG}
+if [ -n "${SIGN_SAN}${SIGN_HOST}${SIGN_FQDN}" ]; then
+	SIGN_PRESENT=1
+fi
+
+generate_configfile ${CAUTL_GROUP}
+
+openssl ca -config $CAUTL_GENERATED_FILE -in $NEWCSRDIR/$CSR -out $CERT -passin file:${PRIVKEY}.pwd -extensions ${CAUTL_CA_EXTENSION-sub_ca_ext} ${CAUTL_CA_ARG}
