@@ -1,5 +1,6 @@
 export CA_HOME=$HOME/.cautl
 export CA_NAME=exp
+export CA_HOST=$CA_NAME
 export CA_DOMAIN=example.com
 export CA_COUNTRY=DE
 export CA_ORG=Example

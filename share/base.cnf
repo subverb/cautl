@@ -1,9 +1,10 @@
 [default]
 name                    = <<CA_NAME>>
+host			= <<CA_HOST>>
 domain_suffix           = <<CA_DOMAIN>>
-aia_url                 = http://$name.$domain_suffix/$name.crt
-crl_url                 = http://$name.$domain_suffix/$name.crl
-ocsp_url                = http://ocsp.$name.$domain_suffix:<<CA_OCSP_PORT>>
+aia_url                 = http://$host.$domain_suffix/$name.crt
+crl_url                 = http://$host.$domain_suffix/$name.crl
+ocsp_url                = http://ocsp.$host.$domain_suffix:<<CA_OCSP_PORT>>
 default_ca              = ca_default
 name_opt                = utf8,esc_ctrl,multiline,lname,align
 
