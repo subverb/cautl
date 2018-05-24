@@ -1,7 +1,7 @@
 
-ctllibdir=${pkglibdir}
+ctllibdir=${exec_prefix}/lib/${PACKAGE}
 
-dist_ctllib_SCRIPTS= \
+nobase_dist_ctllib_SCRIPTS= \
 	subverb-pre.sh \
 	subverb-configured.sh \
 	subverb/init.sh \
