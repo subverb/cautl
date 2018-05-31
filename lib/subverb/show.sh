@@ -16,16 +16,18 @@ SV_OPTION_HELP[CERT_FILE]="explicit filename of certificate to show. This will o
 
 sv_parse_options "$@"
 
+CERT_BASE="${CERT_FILE}"
 if [ -z "$CERT_FILE" ]; then
 	if [ -z "$CERT_NAME" ]; then
 		echo "Either --name or --file must be given" >&2
 		exit 1
 	fi
+	CERT_BASE="$CERT_NAME"
 	CERT_FILE="$CA_HOME/$CERT_TYPE/$CERT_NAME"
 fi
 
 if [ ! -f "$CERT_FILE" ]; then
-	echo "Certificate ${CERT_NAME:-${CERT_FILE}} not found!" >&2
+	echo "Certificate ${CERT_BASE} not found!" >&2
 	exit 1
 fi
 
