@@ -32,14 +32,14 @@ if [ ! -f "$CERT_FILE" ]; then
 fi
 
 FILETYPE=
-COMMON_ARGS=
+COMMON_ARGS="-text -noout"
 case "${CERT_FILE}" in
 	*.pem|*.crt)
 		FILETYPE=$(grep -e "-----" "${CERT_FILE}" | head -n 1 | sed -e 's/-//g;s/BEGIN\s*//i')
-		COMMON_ARGS="-text -noout"
 		;;
 	*.p12|*.pfx)
 		FILETYPE="PKCS#12"
+		COMMON_ARGS=""
 		;;
 	*)
 		FILETYPE="unknown"
