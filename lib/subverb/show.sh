@@ -11,8 +11,10 @@ SV_SHORT_OPTION[t]="CERT_TYPE"
 SV_OPTION_HELP[CERT_TYPE]="certificate type to check - one of [certs, crl, newcerts, private]"
 
 SV_OPTION[file]="CERT_FILE"
+SV_OPTION[uri]="CERT_FILE"
 SV_SHORT_OPTION[f]="CERT_FILE"
-SV_OPTION_HELP[CERT_FILE]="explicit filename of certificate to show. This will override --name and --type"
+SV_SHORT_OPTION[u]="CERT_FILE"
+SV_OPTION_HELP[CERT_FILE]="explicit filename (or URI of a SSL/TLS-Server) of certificate to show. This will override --name and --type"
 
 sv_parse_options "$@"
 
@@ -26,7 +28,7 @@ if [ -z "$CERT_FILE" ]; then
 	CERT_FILE="$CA_HOME/$CERT_TYPE/$CERT_NAME"
 fi
 
-if [ ! -f "$CERT_FILE" ]; then
+if [[ ! "${CERT_FILE}" =~ "://" ]] && [[ ! -f "$CERT_FILE" ]]; then
 	echo "Certificate ${CERT_BASE} not found!" >&2
 	exit 1
 fi
@@ -34,7 +36,28 @@ fi
 PEM_SEPARATOR="-----"
 FILETYPE=
 COMMON_ARGS="-text -noout"
+
+uri_regex='^([-a-zA-Z0-9]+)://([-_a-zA-Z0-9]+)(:([0-9]+))?'
 case "${CERT_FILE}" in
+	*://*)
+		HOST=
+		PORT=
+		if [[ "${CERT_FILE}" =~ $uri_regex ]]; then
+			PROTO=${BASH_REMATCH[1]};
+			HOST=${BASH_REMATCH[2]};
+			PORT=${BASH_REMATCH[4]};
+			if [ -z "$PORT" ]; then
+				PORT=$(getent services ${PROTO} | grep tcp | sed -e "s/${PROTO}\\s*//;s,/tcp,,")
+			fi
+		else
+			echo "Unkown URI-format '${CERT_FILE}'" >&2
+			exit 1
+		fi
+		FILETYPE=CERTIFICATE
+		CERT_FILE=$(mktemp --tmpdir cautl_XXXXXXXX.pem)
+		trap_add "rm ${CERT_FILE}" EXIT
+		openssl s_client -connect ${HOST}:${PROTO} </dev/null 2>/dev/null | sed -ne "/${PEM_SEPARATOR}BEGIN ${FILETYPE}${PEM_SEPARATOR}/,/${PEM_SEPARATOR}END ${FILETYPE}${PEM_SEPARATOR}/p" > "$CERT_FILE"
+		;;
 	*.pem|*.crt)
 		FILETYPE=$(grep -e "$PEM_SEPARATOR" "${CERT_FILE}" | head -n 1 | sed -e 's/-//g;s/BEGIN\s*//i')
 		;;
