@@ -18,5 +18,6 @@ SV_OPTION_HELP=(
 	[CAUTL_CONFIG_TYPE]="add a suffix for alternate configuration overrides"
 )
 
+. $(sv_default_dir pkglib)/functions.sh
 . $(sv_default_dir pkglib)/template.sh
 

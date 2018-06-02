@@ -2,6 +2,7 @@
 ctllibdir=${exec_prefix}/lib/${PACKAGE}
 
 nobase_dist_ctllib_SCRIPTS= \
+	functions.sh \
 	subverb-pre.sh \
 	subverb-configured.sh \
 	subverb/init.sh \
