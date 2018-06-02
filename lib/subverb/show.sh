@@ -2,13 +2,7 @@
 
 CERT_TYPE="certs"
 
-SV_OPTION[name]="CERT_NAME"
-SV_SHORT_OPTION[n]="CERT_NAME"
-SV_OPTION_HELP[CERT_NAME]="name of the certificate to dump (with suffix)"
-
-SV_OPTION[type]="CERT_TYPE"
-SV_SHORT_OPTION[t]="CERT_TYPE"
-SV_OPTION_HELP[CERT_TYPE]="certificate type to check - one of [certs, crl, newcerts, private]"
+options_cert_name_type
 
 SV_OPTION[file]="CERT_FILE"
 SV_OPTION[uri]="CERT_FILE"
@@ -20,12 +14,12 @@ sv_parse_options "$@"
 
 CERT_BASE="${CERT_FILE}"
 if [ -z "$CERT_FILE" ]; then
-	if [ -z "$CERT_NAME" ]; then
+	if ! test_cert_name_type; then
 		echo "Either --name or --file must be given" >&2
 		exit 1
 	fi
 	CERT_BASE="$CERT_NAME"
-	CERT_FILE="$CA_HOME/$CERT_TYPE/$CERT_NAME"
+	CERT_FILE=$(cert_name2file)
 fi
 
 if [[ ! "${CERT_FILE}" =~ "://" ]] && [[ ! -f "$CERT_FILE" ]]; then
