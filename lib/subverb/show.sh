@@ -1,7 +1,5 @@
 #!/bin/false
 
-CERT_TYPE="certs"
-
 options_cert_name_type
 
 SV_OPTION[file]="CERT_FILE"

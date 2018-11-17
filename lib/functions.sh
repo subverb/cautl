@@ -19,6 +19,7 @@ options_cert_name_type() {
 	SV_SHORT_OPTION[n]="CERT_NAME"
 	SV_OPTION_HELP[CERT_NAME]="name of the certificate to dump (with suffix)"
 
+	declare -g CERT_TYPE="certs"
 	SV_OPTION[type]="CERT_TYPE"
 	SV_SHORT_OPTION[t]="CERT_TYPE"
 	SV_OPTION_HELP[CERT_TYPE]="certificate type to check - one of [certs, crl, newcerts, private]"
