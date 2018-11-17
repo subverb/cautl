@@ -33,3 +33,7 @@ cert_name2file() {
 	echo "$CA_HOME/$CERT_TYPE/$CERT_NAME"
 }
 
+croak() {
+	echo "$1" >&2
+	exit 1
+}
