@@ -5,6 +5,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	functions.sh \
 	subverb-pre.sh \
 	subverb-configured.sh \
+	subverb/convert.sh \
 	subverb/genconf.sh \
 	subverb/gencrl.sh \
 	subverb/gencsr.sh \
@@ -13,5 +14,6 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/list.sh \
 	subverb/revoke.sh \
 	subverb/selfsign.sh \
+	subverb/show.sh \
 	subverb/sign.sh \
 	template.sh
