@@ -1,3 +1,5 @@
+[![pipeline status](https://git.dresden.micronet24.de/benjamin/cautl/badges/master/pipeline.svg)](https://git.dresden.micronet24.de/benjamin/cautl/commits/master)
+
 # Cautl #
 
 The *C*ertificate *A*uthority *UT*i*L*s should provide a reasonable toolset
