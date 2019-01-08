@@ -3,6 +3,9 @@ export NAMED_CONSTRAINTS=1
 CAUTL_GROUP=${CAUTL_GROUP:-default}
 CAUTL_DESCRIPTION="Easy certificate handling and introspection"
 
+SVH_AUTHOR="Benjamin Tietz <benjamin@micronet24.de>"
+SVH_LICENSE="GPLv2"
+
 SV_OPTION=(
 	[opensslconf]=OPENSSL_CONF
 	[group]=CAUTL_GROUP
