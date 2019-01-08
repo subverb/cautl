@@ -35,7 +35,7 @@ if [ $CA_LIST -gt 0 ]; then
 	cat >&2 <<"CA_LIST"
 Supported input formats:
 
-	pem
+	pem der
 
 Supported output formats:
 
@@ -48,6 +48,7 @@ fi
 _guess_certtype() {
 	case "$1" in
 		*.pem|*.csr)		echo pem;;
+		*.der|*.crt|*.cer)	echo der;;
 		*)			return 1;;
 	esac
 	return 0
@@ -70,10 +71,12 @@ if [ -n "$CA_INFILE" ]; then
 		echo "certificate already exists - refusing overwrite"
 		exit 1
 	fi
-	case "${CA_FORM:-$(_guess_certtype "$CA_INFILE" || croak "Unknown certificate type!")}" in
+	CA_FORM=${CA_FORM:-$(_guess_certtype "$CA_INFILE" || croak "Unknown certificate type!")}
+	case "${CA_FORM}" in
 		pem)	cp "$CA_INFILE" "$CA_LOCAL_FILE";;
+		der)	openssl x509 -inform ${CA_FORM} -in "$CA_INFILE" -out "$CA_LOCAL_FILE";;
 		*)
-			echo "Unknown certificate type '${CA_FORM:-${CA_INFILE}}'!" >&2
+			echo "Unknown certificate type '${CA_FORM}'!" >&2
 			exit 1
 			;;
 	esac
