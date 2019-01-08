@@ -4,3 +4,6 @@
 [submodule "bulletproof-tls"]
 	path = bulletproof-tls
 	url = https://github.com/ivanr/bulletproof-tls.git
+[submodule "doc"]
+	path = doc
+	url = https://git.dresden.micronet24.de/benjamin/cautl.wiki.git
