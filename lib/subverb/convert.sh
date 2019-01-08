@@ -39,7 +39,7 @@ Supported input formats:
 
 Supported output formats:
 
-	pem
+	pem der
 
 CA_LIST
 	return 0
@@ -95,8 +95,10 @@ if [ -n "$CA_OUTFILE" ]; then
 		echo "Certificate to export '$CA_LOCAL_FILE'" >&2
 		exit 1
 	fi
-	case "${CA_TO:-$(_guess_certtype "$CA_OUTFILE" || croak "Unknown certificate type!")}" in
+	CA_TO="${CA_TO:-$(_guess_certtype "$CA_OUTFILE" || croak "Unknown certificate type!")}"
+	case "${CA_TO}" in
 		pem)	cp "$CA_LOCAL_FILE" "$CA_OUTFILE";;
+		der)	openssl x509 -outform ${CA_TO} -in "$CA_LOCAL_FILE" -out "$CA_OUTFILE";;
 		*)
 			echo "Unknown certificate type '${CA_TO:-${CA_OUTFILE}}'!" >&2
 			exit 1
