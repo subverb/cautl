@@ -99,6 +99,13 @@ if [ -n "$CA_OUTFILE" ]; then
 	case "${CA_TO}" in
 		pem)	cp "$CA_LOCAL_FILE" "$CA_OUTFILE";;
 		der)	openssl x509 -outform ${CA_TO} -in "$CA_LOCAL_FILE" -out "$CA_OUTFILE";;
+		nopwd.pem) 
+			if [ "$CERT_TYPE" != "private" ]; then
+				echo "only private items should be password protected"
+				exit 1
+			fi
+			openssl rsa -outform pem -in "$CA_LOCAL_FILE" -passin "file:${CA_LOCAL_FILE}.pwd" -out "$CA_OUTFILE"
+			;;
 		*)
 			echo "Unknown certificate type '${CA_TO:-${CA_OUTFILE}}'!" >&2
 			exit 1
