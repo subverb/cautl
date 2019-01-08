@@ -1,0 +1,17 @@
+debian_test:
+  stage: deploy
+  script: 
+    - dpkg-buildpackage --no-sign
+  only:
+    - master
+
+debian_upload:
+  stage: deploy
+  script:
+    - rm ../subverb_*.{deb,dsc,changes}
+    - dpkg-buildpackage
+    - reprepro includedeb experimental ../subverb_*.deb
+    - reprepro includedsc experimental ../subverb_*.dsc
+  only:
+    - master
+  when: manual
