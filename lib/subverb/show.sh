@@ -1,4 +1,6 @@
 #!/bin/false
+SV_HELP="show the contents of a certificate"
+SV_GROUP=CertHandling
 
 options_cert_name_type
 

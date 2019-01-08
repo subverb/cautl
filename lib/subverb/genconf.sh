@@ -1,3 +1,5 @@
+SV_HELP="Generate current openssl configuraiton file"
+SV_GROUP=utils
 CA_QUIET=${CA_QUIET:-0}
 
 SV_OPTION[file]=CA_FILE

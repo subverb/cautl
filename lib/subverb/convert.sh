@@ -1,5 +1,6 @@
 #!cautl
 
+SV_GROUP=utils
 SV_HELP="import, export or convert certificate files"
 
 options_cert_name_type

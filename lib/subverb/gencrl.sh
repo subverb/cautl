@@ -1,3 +1,5 @@
+SV_HELP="Generate Certificate revocation list for the current certificate authority"
+SV_GROUP=CA_handling
 CRL=$($GETCACONF  -k crl)
 PRIVKEY=$($GETCACONF -k private_key)
 

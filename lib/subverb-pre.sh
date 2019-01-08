@@ -1,6 +1,7 @@
 export UTF8=1
 export NAMED_CONSTRAINTS=1
 CAUTL_GROUP=${CAUTL_GROUP:-default}
+CAUTL_DESCRIPTION="Easy certificate handling and introspection"
 
 SV_OPTION=(
 	[opensslconf]=OPENSSL_CONF
@@ -16,6 +17,8 @@ SV_SHORT_OPTION=(
 
 SV_OPTION_HELP=(
 	[CAUTL_CONFIG_TYPE]="add a suffix for alternate configuration overrides"
+	[OPENSSL_CONF]="temporary openssl configuration file to use"
+	[CAUTL_GROUP]="configuration and certificate store selection"
 )
 
 . $(sv_default_dir pkglib)/functions.sh

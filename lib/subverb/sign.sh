@@ -1,3 +1,6 @@
+SV_HELP="sign a given certificate"
+SV_GROUP=CA_handling
+
 NEWCSRDIR=$($GETCACONF  -k new_certs_dir)
 PRIVKEY=$($GETCACONF -k private_key)
 

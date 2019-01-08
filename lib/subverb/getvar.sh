@@ -1,3 +1,6 @@
+SV_HELP="Show the value of a given configuration key"
+SV_GROUP=utils
+
 SV_OPTION=(
 	[key]=ENV_KEY
 	[section]=ENV_SECTION

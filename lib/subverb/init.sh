@@ -1,3 +1,5 @@
+SV_HELP="Initialize the local certificate store"
+SV_GROUP=Housekeeping
 SV_OPTION[root-ca]=":INIT_ROOT_CA"
 
 sv_parse_options "$@"

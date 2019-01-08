@@ -1,3 +1,6 @@
+SV_HELP="Generate a certificate signing request"
+SV_GROUP=CertHandling
+
 NAME=$($GETCACONF -k name).pem
 CSRDIR=$($GETCACONF  -k new_certs_dir)
 PRIVKEY=$($GETCACONF -k private_key)

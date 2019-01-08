@@ -1,3 +1,6 @@
+SV_HELP="Revoke current certificate"
+SV_GROUP=CertHandling
+
 CERT=$($GETCACONF -k certs)/$1
 REASON=$2
 
