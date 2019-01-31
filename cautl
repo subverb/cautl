@@ -16,6 +16,7 @@ fi
 echo running suberb in dev-mode
 export CAUTL_SYSCONFIG=etc/cautl
 export CAUTL_SHARED_DIR=share
+export CAUTL_DOC_DIR=doc
 export CAUTL_LIB_DIR=lib
 export CAUTL_SUBCMD_DIR=lib/subverb
 export PATH=$PATH:bin/
