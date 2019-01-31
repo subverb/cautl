@@ -4,11 +4,14 @@ CA_QUIET=${CA_QUIET:-0}
 
 SV_OPTION[file]=CA_FILE
 SV_SHORT_OPTION[f]=CA_FILE
+SV_OPTION_HELP[CA_FILE]="specify a filename for the generated data"
 
 SV_OPTION[keep-files]=:CA_KEEP
+SV_OPTION_HELP[CA_KEEP]="By default, the generated file will be removed, when the application exits. With this option, the file will be left."
 
 SV_OPTION[quiet]=:CA_QUIET
 SV_SHORT_OPTION[q]=:CA_QUIET
+SV_OPTION_HELP[CA_QUIET]="Suppress normal output"
 
 sv_parse_options "$@"
 
