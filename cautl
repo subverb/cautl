@@ -13,7 +13,7 @@ if [ -z "$SUBVERB" ]; then
 	exit 1
 fi
 
-echo running suberb in dev-mode
+echo running suberb in dev-mode 1>&2
 export CAUTL_SYSCONFIG=etc/cautl
 export CAUTL_SHARED_DIR=share
 export CAUTL_DOC_DIR=doc
