@@ -1,6 +1,12 @@
 # editor temporary
 .*.sw[po]
 
+# generated documenatation
+cautl*.1
+
+# generated dist
+cautl-*.tar.gz
+
 # build environment
 /configure
 Makefile
