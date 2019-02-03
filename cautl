@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ -z "$SUBVERB" ]; then
-	SUBVERB=$(which subverb)
-fi
-
 if [ -z "$SUBVERB" -a -x "subverb/subverb" ]; then
 	SUBVERB="./subverb/subverb"
+fi
+
+if [ -z "$SUBVERB" ]; then
+	SUBVERB=$(which subverb)
 fi
 
 if [ -z "$SUBVERB" ]; then
