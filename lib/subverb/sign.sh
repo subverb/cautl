@@ -1,5 +1,6 @@
 SV_HELP="sign a given certificate"
 SV_GROUP=CA_handling
+SV_HANDLE_HELP=sourced
 
 NEWCSRDIR=$($GETCACONF  -k new_certs_dir)
 PRIVKEY=$($GETCACONF -k private_key)
@@ -20,6 +21,10 @@ SV_OPTION_HELP[SIGN_FQDN]="provide a (fqdn) hostname"
 
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 CSR="${SV_UNPARSED[0]}"
 

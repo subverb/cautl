@@ -2,6 +2,7 @@
 
 SV_GROUP=utils
 SV_HELP="import, export or convert certificate files"
+SV_HANDLE_HELP=sourced
 
 options_cert_name_type
 
@@ -31,6 +32,10 @@ SV_OPTION[force]=":CA_FORCE"
 SV_OPTION_HELP[CA_FORCE]="overwrite existing certificates."
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 if [ $CA_LIST -gt 0 ]; then
 	cat >&2 <<"CA_LIST"

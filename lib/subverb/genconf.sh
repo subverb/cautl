@@ -1,6 +1,7 @@
 SV_HELP="Generate current openssl configuraiton file"
 SV_GROUP=utils
 CA_QUIET=${CA_QUIET:-0}
+SV_HANDLE_HELP=sourced
 
 SV_OPTION[file]=CA_FILE
 SV_SHORT_OPTION[f]=CA_FILE
@@ -14,6 +15,10 @@ SV_SHORT_OPTION[q]=:CA_QUIET
 SV_OPTION_HELP[CA_QUIET]="Suppress normal output"
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 if [ -n "$CA_KEEP" -o -n "$CA_FILE" ]; then
 	export SV_DEBUG="$SV_DEBUG,keep_cnf"

@@ -1,8 +1,14 @@
 SV_HELP="Initialize the local certificate store"
 SV_GROUP=Housekeeping
 SV_OPTION[root-ca]=":INIT_ROOT_CA"
+SV_HANDLE_HELP=sourced
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
+
 
 for i in new_certs_dir certs crl_dir; do
 	DIR=$($GETCACONF -k "$i")

@@ -1,5 +1,10 @@
 SV_HELP="Revoke current certificate"
 SV_GROUP=CertHandling
+SV_HANDLE_HELP=sourced
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 CERT=$($GETCACONF -k certs)/$1
 REASON=$2

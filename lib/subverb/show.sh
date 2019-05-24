@@ -1,6 +1,7 @@
 #!/bin/false
 SV_HELP="show the contents of a certificate"
 SV_GROUP=CertHandling
+SV_HANDLE_HELP=sourced
 
 options_cert_name_type
 
@@ -11,6 +12,10 @@ SV_SHORT_OPTION[u]="CERT_FILE"
 SV_OPTION_HELP[CERT_FILE]="explicit filename (or URI of a SSL/TLS-Server) of certificate to show. This will override --name and --type"
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 CERT_BASE="${CERT_FILE}"
 if [ -z "$CERT_FILE" ]; then

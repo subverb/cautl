@@ -1,5 +1,6 @@
 SV_HELP="Show the value of a given configuration key"
 SV_GROUP=utils
+SV_HANDLE_HELP=sourced
 
 SV_OPTION=(
 	[key]=ENV_KEY
@@ -11,6 +12,10 @@ SV_SHORT_OPTION=(
 	);
 
 sv_parse_options "$@"
+
+if [ "$1" == "_help_source_" ]; then
+	return 0
+fi
 
 ARGS=
 if [ -n "$ENV_SECTION" ]; then
