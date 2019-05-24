@@ -6,4 +6,4 @@ if [ "$1" == "_help_source_" ]; then
 	return 0
 fi
 
-ls $($GETCACONF -k certs)
+sv_backend --group cert --all --mandatory list
