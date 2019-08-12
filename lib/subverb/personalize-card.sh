@@ -139,3 +139,13 @@ CAUTL_GENERATED_FILE=${PREGEN_FILE}
 echo "Erasing card"
 sv_backend --backend "$CARD_BACKEND" --optional erase -- $CONFFILE
 
+echo "Setting pins"
+if [ -n "$SO_PIN" ]; then
+	sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_SOPIN" --pin "$SO_PIN" --puk "$SO_PUK" --type so --conffile $CONFFILE
+else
+	SO_PIN=$DEFAULT_SOPIN
+fi
+if [ -n "$PIN" ]; then
+	sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_PIN" --pin "$PIN" --puk "$PUK" --type user --conffile $CONFFILE
+fi
+
