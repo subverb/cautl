@@ -38,6 +38,10 @@ SV_OPTION[so-pin]="CA_SO_PUK"
 SV_SHORT_OPTION[K]="CA_SO_PUK"
 SV_OPTION_HELP[CA_SO_PUK]="specify a security officer puk (SO_PUK) to set"
 
+SV_OPTION[bitsize]="CA_CARD_BITSIZE"
+SV_SHORT_OPTION[b]="CA_CARD_BITSIZE"
+SV_OPTION_HELP[CA_CARD_BITSIZE]="size of the key to generate"
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -149,3 +153,19 @@ if [ -n "$PIN" ]; then
 	sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_PIN" --pin "$PIN" --puk "$PUK" --type user --conffile $CONFFILE
 fi
 
+PRIVDIR=$(dirname $($GETCACONF -k private_key))
+if [ "$CERT_GENERATION" = "onhost" ]; then
+	( trap "" EXIT; sv_call_subverb gencsr --name $CA_FILEBASENAME --commonname "${CA_LABEL##CN=}" --keylen $CA_CARD_BITSIZE --group $READER_GROUPTYPE ) # force a subshell here
+	if [ $? -ne 0 ]; then
+		exit 1
+	fi
+	SIGN_ARGS=$CA_FILEBASENAME.pem
+	if [ "$cert_type" = "host" ]; then
+		SIGN_ARGS="--fqdn-host '${CA_LABEL##CN=}' $SIGN_ARGS"
+	fi
+	sv_call_subverb sign $SIGN_ARGS
+	PIN=$PIN sv_call_subverb convert --type private --name $CA_FILEBASENAME.pem --to p12 --passout env:PIN #XXX add intermediate certificate
+	for i in "${READER_CERT_TARGET[@]}"; do
+		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i
+	done
+fi
