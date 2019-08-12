@@ -31,6 +31,11 @@ CA_FORCE=0
 SV_OPTION[force]=":CA_FORCE"
 SV_OPTION_HELP[CA_FORCE]="overwrite existing certificates."
 
+SV_OPTION[passin]="CA_PASSIN"
+SV_OPTION_HELP[CA_PASSIN]="provide password for input certificate (prefix with file: or env: for read from file or environment)"
+
+SV_OPTION[passout]="CA_PASSOUT"
+SV_OPTION_HELP[CA_PASSOUT]="provide password for output certificate"
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -112,6 +117,14 @@ if [ -n "$CA_OUTFILE" ]; then
 		echo "Certificate to export '$CA_LOCAL_FILE'" >&2
 		exit 1
 	fi
+	if [ -n "$CA_PASSIN" ]; then
+		CA_PASSIN_ARG="-passin $CA_PASSIN"
+	else
+		CA_PASSIN_ARG="-passin file:${CA_LOCAL_FILE}.pwd"
+	fi
+	if [ -n "$CA_PASSOUT" ]; then
+		CA_PASSOUT_ARG="-passout $CA_PASSOUT"
+	fi
 	CA_TO="${CA_TO:-$(_guess_certtype "$CA_OUTFILE" || croak "Unknown certificate type!")}"
 	case "${CA_TO}" in
 		pem)	cp "$CA_LOCAL_FILE" "$CA_OUTFILE";;
@@ -121,7 +134,7 @@ if [ -n "$CA_OUTFILE" ]; then
 				echo "only private items should be password protected"
 				exit 1
 			fi
-			openssl rsa -outform pem -in "$CA_LOCAL_FILE" -passin "file:${CA_LOCAL_FILE}.pwd" -out "$CA_OUTFILE"
+			openssl rsa -outform pem -in "$CA_LOCAL_FILE" ${CA_PASSIN_ARG} -out "$CA_OUTFILE"
 			;;
 		*)
 			echo "Unknown certificate type '${CA_TO:-${CA_OUTFILE}}'!" >&2
