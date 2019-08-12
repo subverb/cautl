@@ -102,7 +102,7 @@ fi
 if [ -n "$CA_OUTFILE" ]; then
 	if [ -z "$CA_LOCAL_FILE" ]; then
 		if test_cert_name_type; then
-			CA_LOCAL_FILE=cert_name2file
+			CA_LOCAL_FILE=$(cert_name2file)
 		else
 			echo "No certificate to export" >&2
 			exit 1
