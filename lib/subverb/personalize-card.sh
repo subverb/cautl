@@ -136,4 +136,6 @@ template2tempfile $DATADIR < $DATADIR/personalize-card
 CONFFILE=${CAUTL_GENERATED_FILE}
 CAUTL_GENERATED_FILE=${PREGEN_FILE}
 
+echo "Erasing card"
+sv_backend --backend "$CARD_BACKEND" --optional erase -- $CONFFILE
 
