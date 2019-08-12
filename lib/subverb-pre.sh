@@ -24,6 +24,8 @@ SV_OPTION_HELP=(
 	[CAUTL_GROUP]="configuration and certificate store selection"
 )
 
+CA_ALGO="rsa"
+
 . $(sv_default_dir pkglib)/functions.sh
 . $(sv_default_dir pkglib)/template.sh
 

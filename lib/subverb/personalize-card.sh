@@ -38,6 +38,10 @@ SV_OPTION[so-pin]="CA_SO_PUK"
 SV_SHORT_OPTION[K]="CA_SO_PUK"
 SV_OPTION_HELP[CA_SO_PUK]="specify a security officer puk (SO_PUK) to set"
 
+SV_OPTION[algorithm]="CA_ALGO"
+SV_SHORT_OPTION[a]="CA_ALGO"
+SV_OPTION_HELP[CA_ALGO]="algorithm to use for key generation"
+
 SV_OPTION[bitsize]="CA_CARD_BITSIZE"
 SV_SHORT_OPTION[b]="CA_CARD_BITSIZE"
 SV_OPTION_HELP[CA_CARD_BITSIZE]="size of the key to generate"
@@ -168,6 +172,10 @@ if [ "$CERT_GENERATION" = "onhost" ]; then
 	for i in "${READER_CERT_TARGET[@]}"; do
 		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i
 	done
+else
+	echo "On-key generation of certificates is untested" 1>&2
+	sv_backend --backend "$CARD_BACKEND" --mandatory createcert -- $CONFFILE $READER_DEFAULT_ID
+	sv_backend --backend "$CARD_BACKEND" --optional getpubkey
 fi
 
 cp --backup=numbered $CONFFILE $PRIVDIR/$CA_FILEBASENAME.conf
