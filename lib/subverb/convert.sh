@@ -76,7 +76,7 @@ if [ -n "$CA_INFILE" ]; then
 	if test_cert_name_type; then
 		CA_LOCAL_FILE=$(cert_name2file)
 	elif [ -n "$CA_OUTFILE" ]; then
-		CA_LOCAL_FILE=$(mktemp --tmpdir cautl_XXXXXXXX.pem)
+		CA_LOCAL_FILE=$(mktemp --dry-run --tmpdir cautl_XXXXXXXX.pem)
 		trap_add "rm ${CA_LOCAL_FILE}" EXIT
 	elif CERT_NAME=$(basename "$CA_INFILE") test_cert_name_type; then
 		CERT_NAME=$(basename "$CA_INFILE")
