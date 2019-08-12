@@ -60,6 +60,17 @@ _guess_certtype() {
 	return 0
 }
 
+if [ -z "$CA_OUTFILE" -a -n "$CA_TO" ]; then
+	if [ -n "$CA_INFILE" ]; then
+		CA_OUTFILE="$CA_INFILE"
+	elif test_cert_name_type; then
+		CA_OUTFILE="$(cert_name2file)"
+	else
+		echo "No certificate to convert found"
+	fi
+	CA_OUTFILE=${CA_OUTFILE%.*}.$CA_TO
+fi
+
 CA_LOCAL_FILE=
 if [ -n "$CA_INFILE" ]; then
 	if test_cert_name_type; then
