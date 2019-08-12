@@ -169,3 +169,5 @@ if [ "$CERT_GENERATION" = "onhost" ]; then
 		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i
 	done
 fi
+
+cp --backup=numbered $CONFFILE $PRIVDIR/$CA_FILEBASENAME.conf
