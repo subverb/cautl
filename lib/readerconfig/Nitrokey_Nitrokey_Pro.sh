@@ -1,0 +1,1 @@
+gpgcard.sh
