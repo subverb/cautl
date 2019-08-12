@@ -22,11 +22,63 @@ CA_NOLABEL=0
 SV_OPTION[no-label]=":CA_NOLABEL"
 SV_OPTION_HELP[CA_NOLABEL]="Don't specify a label for the key"
 
+SV_OPTION[pin]="CA_PIN"
+SV_SHORT_OPTION[p]="CA_PIN"
+SV_OPTION_HELP[CA_PIN]="specify the user-pin to set"
+
+SV_OPTION[so-pin]="CA_SO_PIN"
+SV_SHORT_OPTION[P]="CA_SO_PIN"
+SV_OPTION_HELP[CA_SO_PIN]="specify a security officer pin (SO_PIN) to set"
+
+SV_OPTION[puk]="CA_PUK"
+SV_SHORT_OPTION[k]="CA_PUK"
+SV_OPTION_HELP[CA_PUK]="specify the user-puk to set"
+
+SV_OPTION[so-pin]="CA_SO_PUK"
+SV_SHORT_OPTION[K]="CA_SO_PUK"
+SV_OPTION_HELP[CA_SO_PUK]="specify a security officer puk (SO_PUK) to set"
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
 	return 0
 fi
+
+check_pin() {
+	local type=$1
+	local var=$2
+	local length=$3
+	local maxlength=${4:-$length}
+	local PIN=
+	case "$var" in
+		env:*)
+			var=ENV:${var#env:}
+			;& # handle like ENV:*
+		ENV:*)
+			local -n varref=${var#ENV:}
+			PIN=$varref
+			;;
+		generate|"")
+			PIN=${RANDOM:1}
+			while [ ${#PIN} -lt $length ]; do
+				PIN="$PIN${RANDOM:1}"
+			done
+			PIN=${PIN:0:$maxlength}
+			;;
+		none)
+			PIN=
+			return 0
+			;;
+		*)
+			PIN=$var
+			;;
+	esac
+	if [ -z "$PIN" ]; then
+		echo "no valid $type found" 1>&2
+		exit 1
+	fi
+	echo "$PIN"
+}
 
 declare -g cert_type="generic"
 declare -g CA_FILEBASENAME="$CA_LABEL"
@@ -69,5 +121,13 @@ if [ -z "$CARD_BACKEND" ]; then
 	echo "No card-backend found!" 1>&2
 	exit 1
 fi
+
+if [ -z $READER_PIN_MIN ]; then
+	echo "minumum PIN-length unknown. Can't update pins!"
+fi
+local PIN=$(check_pin PIN "$CA_PIN" $READER_PIN_MIN $READER_PIN_MAX)
+local PUK=$(check_pin PUK "$CA_PUK" $READER_PIN_MIN $READER_PIN_MAX)
+local SO_PIN=$(check_pin SO-PIN "$CA_SO_PIN" $READER_SOPIN_MIN $READER_SOPIN_MAX)
+local SO_PUK=$(check_pin SO-PUK "$CA_SO_PUK" $READER_SOPIN_MIN $READER_SOPIN_MAX)
 
 
