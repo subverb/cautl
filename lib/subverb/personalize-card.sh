@@ -63,4 +63,11 @@ if [ -z "$CA_LABEL" ]; then
 	fi
 fi
 
+declare CARD_BACKEND
+sv_backend --group card --one --mandatory initreader
+if [ -z "$CARD_BACKEND" ]; then
+	echo "No card-backend found!" 1>&2
+	exit 1
+fi
+
 
