@@ -50,7 +50,7 @@ Supported input formats:
 
 Supported output formats:
 
-	pem der
+	pem der p12
 
 CA_LIST
 	return 0
@@ -60,6 +60,7 @@ _guess_certtype() {
 	case "$1" in
 		*.pem|*.csr)		echo pem;;
 		*.der|*.crt|*.cer)	echo der;;
+		*.p12|*.pfx)		echo p12;;
 		*)			return 1;;
 	esac
 	return 0
@@ -135,6 +136,18 @@ if [ -n "$CA_OUTFILE" ]; then
 				exit 1
 			fi
 			openssl rsa -outform pem -in "$CA_LOCAL_FILE" ${CA_PASSIN_ARG} -out "$CA_OUTFILE"
+			;;
+		p12)
+			if [ -z "$CERT_NAME" ]; then
+				echo "automatic certificate relation handling cannot be done without a common certificate name" 1>&2
+				exit 1
+			fi
+			CA_LOCAL_PRIV=$(CERT_TYPE=private cert_name2file)
+			CA_LOCAL_CERT=$(CERT_TYPE=certs cert_name2file)
+			if [ "$CA_LOCAL_PRIV" != "$CA_LOCAL_FILE" -a -z "$CA_PASSIN" ]; then
+				CA_PASSIN_ARG="-passin file:${CA_LOCAL_PRIV}.pwd"
+			fi
+			openssl pkcs12 -export -out "$CA_OUTFILE" -name "${CERT_NAME%%.pem}" -inkey "${CA_LOCAL_PRIV}" -in "${CA_LOCAL_CERT}" -certfile $($GETCACONF -k certificate) $CA_PASSIN_ARG $CA_PASSOUT_ARG
 			;;
 		*)
 			echo "Unknown certificate type '${CA_TO:-${CA_OUTFILE}}'!" >&2
