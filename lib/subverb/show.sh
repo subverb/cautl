@@ -92,6 +92,9 @@ case "$FILETYPE" in
 		;;
 	"CERTIFICATE")
 		OPENSSL_SUBCMD="x509"
+		for i in md5 sha1 sha256; do
+			openssl $OPENSSL_SUBCMD -noout -fingerprint -$i -in ${CERT_FILE}
+		done
 		;;
 	"X509 CRL")
 		OPENSSL_SUBCMD="crl"
