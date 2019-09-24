@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if [ -z "$SUBVERB" -a -x "subverb/subverb" ]; then
-	SUBVERB="./subverb/subverb"
+CA_BASEDIR=$(dirname $0)
+
+if [ -z "$SUBVERB" -a -x "$CA_BASEDIR/subverb/subverb" ]; then
+	SUBVERB="$CA_BASEDIR/subverb/subverb"
 fi
 
 if [ -z "$SUBVERB" ]; then
@@ -13,12 +15,12 @@ if [ -z "$SUBVERB" ]; then
 	exit 1
 fi
 
-echo running suberb in dev-mode 1>&2
-export CAUTL_SYSCONFIG=etc/cautl
-export CAUTL_SHARED_DIR=share
-export CAUTL_DOC_DIR=doc
-export CAUTL_LIB_DIR=lib
-export CAUTL_SUBCMD_DIR=lib/subverb
+echo running suberb in dev-mode in $CA_BASEDIR 1>&2
+export CAUTL_SYSCONFIG=$CA_BASEDIR/etc/cautl
+export CAUTL_SHARED_DIR=$CA_BASEDIR/share
+export CAUTL_DOC_DIR=$CA_BASEDIR/doc
+export CAUTL_LIB_DIR=$CA_BASEDIR/lib
+export CAUTL_SUBCMD_DIR=$CA_BASEDIR/lib/subverb
 export PATH=$PATH:bin/
 
 . $SUBVERB
