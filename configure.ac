@@ -1,4 +1,4 @@
-AC_INIT(cautl, 0.01, benjamin@micronet24.de)
+AC_INIT(cautl, 1.0.1, benjamin@micronet24.de)
 AM_INIT_AUTOMAKE([foreign])
 AC_PROG_LN_S
 AC_PROG_SED

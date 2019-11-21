@@ -1,3 +1,11 @@
+cautl (1.0.1+nmu1) UNRELEASED; urgency=medium
+
+  * local package
+  * provide initial support for usb-tokens (personalize-card)
+  * convert certificate types
+
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Thu, 21 Nov 2019 13:55:55 +0100
+
 cautl (1.0.0+nmu3) UNRELEASED; urgency=medium
 
   * local package
