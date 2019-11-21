@@ -139,9 +139,13 @@ local SO_PIN=$(check_pin SO-PIN "$CA_SO_PIN" $READER_SOPIN_MIN $READER_SOPIN_MAX
 local SO_PUK=$(check_pin SO-PUK "$CA_SO_PUK" $READER_SOPIN_MIN $READER_SOPIN_MAX)
 
 local DATADIR=$(sv_default_dir pkgdata)
+PRIVDIR=$(dirname $($GETCACONF -k private_key))
+
 PREGEN_FILE=${CAUTL_GENERATED_FILE}
 template2tempfile $DATADIR < $DATADIR/personalize-card
 CONFFILE=${CAUTL_GENERATED_FILE}
+template2tempfile $DATADIR < $DATADIR/personalize-card.user
+cp --backup=numbered ${CAUTL_GENERATED_FILE} $PRIVDIR/$CA_FILEBASENAME.user.conf
 CAUTL_GENERATED_FILE=${PREGEN_FILE}
 
 echo "Erasing card"
@@ -157,7 +161,6 @@ if [ -n "$PIN" ]; then
 	sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_PIN" --pin "$PIN" --puk "$PUK" --type user --conffile $CONFFILE
 fi
 
-PRIVDIR=$(dirname $($GETCACONF -k private_key))
 if [ "$CERT_GENERATION" = "onhost" ]; then
 	( trap "" EXIT; sv_call_subverb gencsr --name $CA_FILEBASENAME --commonname "${CA_LABEL##CN=}" --keylen $CA_CARD_BITSIZE --group $READER_GROUPTYPE ) # force a subshell here
 	if [ $? -ne 0 ]; then
