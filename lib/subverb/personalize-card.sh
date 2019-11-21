@@ -4,7 +4,7 @@ SV_HANDLE_HELP=sourced
 
 SV_OPTION[label]="CA_LABEL"
 SV_SHORT_OPTION[l]="CA_LABEL"
-SV_OPTION_HELP[CA_INFILE]="Specify a free-form label"
+SV_OPTION_HELP[CA_LABEL]="Specify a free-form label"
 
 SV_OPTION[user-label]="CA_USER_LABEL"
 SV_SHORT_OPTION[u]="CA_USER_LABEL"
@@ -34,7 +34,7 @@ SV_OPTION[puk]="CA_PUK"
 SV_SHORT_OPTION[k]="CA_PUK"
 SV_OPTION_HELP[CA_PUK]="specify the user-puk to set"
 
-SV_OPTION[so-pin]="CA_SO_PUK"
+SV_OPTION[so-puk]="CA_SO_PUK"
 SV_SHORT_OPTION[K]="CA_SO_PUK"
 SV_OPTION_HELP[CA_SO_PUK]="specify a security officer puk (SO_PUK) to set"
 
