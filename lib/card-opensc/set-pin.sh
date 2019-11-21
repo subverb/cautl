@@ -31,7 +31,9 @@ case "$SP_TYPE" in
 		;;
 	so)
 		SP_TYPE=$READER_SO_AUTH_ID
+		PINARGS="$PINARGS --login-type so"
+		handle_pin SP_CURRENT --so-pin
 		;;
 esac
-	
+
 pkcs11-tool --slot-index $READER_ID --id $SP_TYPE --$READER_PIN_METHOD-pin $PINARGS --login

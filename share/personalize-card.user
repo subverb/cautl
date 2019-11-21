@@ -1,0 +1,4 @@
+secret-key-algorithm=<<CA_ALGO>>/<<CA_CARD_BITSIZE>>
+label=<<CA_LABEL>>
+pin=<<PIN>>
+puk=<<PUK>>
