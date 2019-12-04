@@ -13,6 +13,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	cert-card/list.sh \
 	cert-openssl/list.sh \
 	readerconfig/gpgcard.sh \
+	readerconfig/Nitrokey_Nitrokey_Pro.sh \
 	subverb-pre.sh \
 	subverb-configured.sh \
 	subverb/convert.sh \
