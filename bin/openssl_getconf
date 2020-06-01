@@ -26,10 +26,9 @@ OptionParser.new do |o|
 	end
 end.parse!
 
-if opt[:key].nil?
-	puts "no key given"
-	exit 1
-end
-
 config = OpenSSL::Config.new(opt[:filename]);
-puts config.get_value(opt[:section], opt[:key]);
+if opt[:key].nil?
+  puts config[opt[:section]];
+else
+  puts config.get_value(opt[:section], opt[:key]);
+end
