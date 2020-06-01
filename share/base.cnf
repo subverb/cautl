@@ -4,7 +4,11 @@ host			= <<CA_HOST>>
 domain_suffix           = <<CA_DOMAIN>>
 aia_url                 = http://$host.$domain_suffix/$name.crt
 crl_url                 = http://$host.$domain_suffix/$name.crl
+<<if [ -n "$CA_OCSP_URL" ]>> 
+ocsp_url		= <<CA_OCSP_URL>>
+<<else>>
 ocsp_url                = http://ocsp.$host.$domain_suffix:<<CA_OCSP_PORT>>
+<<end>>
 default_ca              = ca_default
 <<if [ "$UTF8" -gt 0 ]>>
 name_opt                = utf8,esc_ctrl,multiline,lname,align
