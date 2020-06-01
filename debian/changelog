@@ -1,3 +1,11 @@
+cautl (1.0.2+nmu1) UNRELEASED; urgency=medium
+
+  * local package
+  * provide OCSP support
+  * provide more support for USB token
+
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Thu, 13 May 2020 17:46:12 +0200
+
 cautl (1.0.0+nmu3) UNRELEASED; urgency=medium
 
   * local package
