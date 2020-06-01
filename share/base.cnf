@@ -2,8 +2,13 @@
 name                    = <<CA_NAME>>
 host			= <<CA_HOST>>
 domain_suffix           = <<CA_DOMAIN>>
+<<if [ -n "$CA_CRL_URL" ]>> 
+aia_url			= <<CA_CRL_URL>>/$name.crt
+crl_url			= <<CA_CRL_URL>>/$name.crl
+<<else>>
 aia_url                 = http://$host.$domain_suffix/$name.crt
 crl_url                 = http://$host.$domain_suffix/$name.crl
+<<end>>
 <<if [ -n "$CA_OCSP_URL" ]>> 
 ocsp_url		= <<CA_OCSP_URL>>
 <<else>>

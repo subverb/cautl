@@ -14,6 +14,10 @@ export CA_COMMONNAME="CA for example"
 ## When there is some proxy in between, the resolver port and
 ## the URL port might be different. Otherwise they should be the same
 # export CA_OCSP_URL=http://${CA_DOMAIN}/ocsp
+## optional explicit CRL and CERT/AIA URL to use
+## Default will be: http://$CA_HOST.$CA_DOMAIN
+## $NAME.crt resp. $NAME.crl will be added automatically
+# export CA_CRL_URL=http://${CA_DOMAIN}/
 export CA_BITSIZE=4096
 export CA_CARD_BITSIZE=2048
 export CA_VLD_DAYS=365
