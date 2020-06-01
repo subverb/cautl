@@ -27,10 +27,12 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/selfsign.sh \
 	subverb/show.sh \
 	subverb/sign.sh \
-	template.sh
+	template.sh \
+	usage-class/ipsec.sh
 
 nobase_dist_ctllib_DATA= \
 	card-opensc/.svbackend \
 	cert-card/.svbackend \
 	cert-openssl/.svbackend \
-	readerconfig/.svbackend
+	readerconfig/.svbackend \
+	usage-class/.svbackend

@@ -19,6 +19,9 @@ SV_OPTION[fqdn-host]="SIGN_FQDN"
 SV_SHORT_OPTION[H]="SIGN_FQDN"
 SV_OPTION_HELP[SIGN_FQDN]="provide a (fqdn) hostname"
 
+SV_OPTION[usage-class]="USAGE_CLASS"
+SV_SHORT_OPTION[u]="USAGE_CLASS"
+SV_OPTION_HELP[USAGE_CLASS]="provide a comma seperated list of usage classes, the certificate should be used for"
 
 sv_parse_options "$@"
 
@@ -47,6 +50,32 @@ fi
 if [ -n "${SIGN_SAN}${SIGN_HOST}${SIGN_FQDN}" ]; then
 	SIGN_PRESENT=1
 fi
+
+declare -gA EXT_KEY_USAGES
+declare -gA KEY_USAGES
+declare -ga SANS
+
+KEY_USAGES[digitalSignature]=1
+KEY_USAGES[keyEncipherment]=1
+KEY_USAGES[nonRepudiation]=1
+EXT_KEY_USAGES[clientAuth]=1
+
+declare defaultIFS=$IFS
+IFS=,
+usage_classes="${USAGE_CLASS},${CA_ALL_USAGE}"
+for cls in ${usage_classes}; do
+	if [ -z "$cls" ]; then continue; fi
+	IFS=$defaultIFS
+	sv_backend --backend "usage-class" --mandatory $cls -- "${SV_UNPARSED[@]}"
+	IFS=,
+done
+KEY_USAGE="${!KEY_USAGES[*]}"
+echo "KEY_USAGE: ${KEY_USAGE}"
+EXT_KEY_USAGE="${!EXT_KEY_USAGES[*]}"
+echo "EXT_KEY_USAGE: ${EXT_KEY_USAGE}"
+printf -v IFS "\n"
+SIGN_SAN="${SANS[*]}"
+IFS=$defaultIFS
 
 generate_configfile ${CAUTL_GROUP}
 
