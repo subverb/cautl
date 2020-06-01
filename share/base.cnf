@@ -21,6 +21,12 @@ name_opt                = utf8,esc_ctrl,multiline,lname,align
 name_opt                = esc_ctrl,multiline,lname,align
 <<end>>
 engines			= engine_section
+<<if [ -n "$OIDs" ]>> 
+oid_section		= additional_oids
+
+[additional_oids]
+<<OIDs>>
+<<end>>
 
 [engine_section]
 pkcs11			= pkcs11_section

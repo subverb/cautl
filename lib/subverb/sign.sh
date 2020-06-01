@@ -54,6 +54,8 @@ fi
 declare -gA EXT_KEY_USAGES
 declare -gA KEY_USAGES
 declare -ga SANS
+declare -gA ADD_OID
+ADD_OID[cautlUsages]=1.3.6.1.4.1.43931.3.1
 
 KEY_USAGES[digitalSignature]=1
 KEY_USAGES[keyEncipherment]=1

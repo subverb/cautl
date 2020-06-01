@@ -91,6 +91,13 @@ template2tempfile() {
 }
 
 generate_configfile() {
+	OIDs=
+	for oid_label in "${!ADD_OID[@]}"; do
+		oid="${ADD_OID[$oid_label]}"
+		if [ "$(openssl asn1parse -genstr "OID:$oid"  | sed -e 's/.*://')" == "$oid" ]; then
+			printf -v OIDs "$OIDs\n$oid_label\t= $oid"
+		fi
+	done
 	file=${1:-default}.cnf
 	DATADIR=$(sv_default_dir pkgdata)
 	template2tempfile $DATADIR < $DATADIR/${file}
