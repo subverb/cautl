@@ -23,6 +23,10 @@ SV_OPTION[usage-class]="USAGE_CLASS"
 SV_SHORT_OPTION[u]="USAGE_CLASS"
 SV_OPTION_HELP[USAGE_CLASS]="provide a comma seperated list of usage classes, the certificate should be used for"
 
+NO_DEFAULT_USAGES=0
+SV_OPTION[no-default-usage-class]=":NO_DEFAULT_USAGES"
+SV_OPTION_HELP[NO_DEFAULT_USAGES]="don't incorporate default usage classes for this certificate"
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -56,11 +60,14 @@ declare -gA KEY_USAGES
 declare -ga SANS
 declare -gA ADD_OID
 ADD_OID[cautlUsages]=1.3.6.1.4.1.43931.3.1
-
-KEY_USAGES[digitalSignature]=1
-KEY_USAGES[keyEncipherment]=1
-KEY_USAGES[nonRepudiation]=1
-EXT_KEY_USAGES[clientAuth]=1
+if [ $NO_DEFAULT_USAGES -gt 0 ]; then
+	CA_ALL_USAGE=
+else
+	KEY_USAGES[digitalSignature]=1
+	KEY_USAGES[keyEncipherment]=1
+	KEY_USAGES[nonRepudiation]=1
+	EXT_KEY_USAGES[clientAuth]=1
+fi
 
 declare defaultIFS=$IFS
 IFS=,
