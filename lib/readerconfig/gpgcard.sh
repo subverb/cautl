@@ -13,3 +13,6 @@ DEFAULT_PIN=123456
 DEFAULT_SOPIN=12345678
 CERT_GENERATION="onhost"
 READER_CERT_TARGET=(2 3)
+CARD_PUSH_SIGN_ERROR["Failed to store private key: Invalid arguments"]=ignore
+CARD_PUSH_SIGN_ERROR["Failed to store private key: Non unique object ID"]=retry
+CARD_PUSH_SIGN_ERROR["Failed to store private key: Not supported"]=ignore
