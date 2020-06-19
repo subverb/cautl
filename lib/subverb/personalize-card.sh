@@ -52,6 +52,8 @@ if [ "$1" == "_help_source_" ]; then
 	return 0
 fi
 
+declare -a ADDITIONAL_ARGS=( "${SV_UNPARSED[@]}" )
+
 check_pin() {
 	local type=$1
 	local var=$2
@@ -170,7 +172,7 @@ if [ "$CERT_GENERATION" = "onhost" ]; then
 	if [ "$cert_type" = "host" ]; then
 		SIGN_ARGS="--fqdn-host '${CA_LABEL##CN=}' $SIGN_ARGS"
 	fi
-	sv_call_subverb sign $SIGN_ARGS
+	sv_call_subverb sign $SIGN_ARGS "${ADDITIONAL_ARGS[@]}"
 	PIN=$PIN sv_call_subverb convert --type private --name $CA_FILEBASENAME.pem --to p12 --passout env:PIN #XXX add intermediate certificate
 	for i in "${READER_CERT_TARGET[@]}"; do
 		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i
