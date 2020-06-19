@@ -24,6 +24,9 @@ READER_GROUPTYPE="client"
 # define the slots, the certificate should be copied to
 declare -ga READER_CERT_TARGET
 
+# define catched errors
+declare -gA CARD_PUSH_SIGN_ERROR
+
 sv_backend --group "" --backend readerconfig --optional $READER_NAME
 
 # TODO evaluate PIN and SOPIN-length, if not set by readerconfig
