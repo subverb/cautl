@@ -14,6 +14,10 @@ SV_OPTION_HELP[OPT_KEYLEN]="specify the length of the generated key (default is 
 SV_OPTION[group]="OPT_GROUP"
 SV_OPTION_HELP[OPT_GROUP]="use a different cautl-group when generating this CSR"
 
+OPT_IFNEXISTS=0
+SV_OPTION[if-not-exists]=":OPT_IFNEXISTS"
+SV_OPTION_HELP[OPT_IFNEXISTS]="don't create a csr (and exit silently), if it already exists"
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -43,6 +47,9 @@ CSRDIR=$($GETCACONF  -f ${CAUTL_GENERATED_FILE} -k new_certs_dir)
 PRIVKEY=$($GETCACONF -f ${CAUTL_GENERATED_FILE} -k private_key)
 
 if [ -f "${PRIVKEY}" ]; then
+	if [ ${OPT_IFNEXISTS} -gt 0 ]; then
+		exit 0
+	fi
 	read -p "private key for ${NAME} already exists. Really overwrite? [yN]" -n 1 FORCE_OVERWRITE
 	if [ $? -ne 0 -o "${FORCE_OVERWRITE,,}" != "y" ]; then
 		echo
