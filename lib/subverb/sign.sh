@@ -63,10 +63,7 @@ ADD_OID[cautlUsages]=1.3.6.1.4.1.43931.3.1
 if [ $NO_DEFAULT_USAGES -gt 0 ]; then
 	CA_ALL_USAGE=
 else
-	KEY_USAGES[digitalSignature]=1
-	KEY_USAGES[keyEncipherment]=1
-	KEY_USAGES[nonRepudiation]=1
-	EXT_KEY_USAGES[clientAuth]=1
+	USAGE_CLASS="default,${USAGE_CLASS}"
 fi
 
 declare defaultIFS=$IFS
