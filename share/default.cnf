@@ -36,14 +36,6 @@ cautlUsages		= <<USAGE_CLASS>>,<<CA_ALL_USAGE>>
 <<if [ "0$NAMED_CONSTRAINTS" -gt 0 ]>>
 nameConstraints         = @name_constraints
 <<end>>
-subjectKeyIdentifier    = hash
-
-[crl_info]
-URI.0                   = $crl_url
-
-[issuer_info]
-caIssuers;URI.0         = $aia_url
-OCSP;URI.0              = $ocsp_url
 
 <<if [ "0$NAMED_CONSTRAINTS" -gt 0 ]>>
 [name_constraints]
@@ -68,6 +60,13 @@ DNS.1=<<SIGN_FQDN>>
 <<if [ -n "$SIGN_SAN" ]>>
 <<SIGN_SAN>>
 <<end>>
+
+[crl_info]
+URI.0                   = $crl_url
+
+[issuer_info]
+caIssuers;URI.0         = $aia_url
+OCSP;URI.0              = $ocsp_url
 
 [ocsp_ext]
 <<if [ "0$AUTHORITY_KEY_IDENTIFIER" -gt 0 ]>>
