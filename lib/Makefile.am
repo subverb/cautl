@@ -28,6 +28,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/show.sh \
 	subverb/sign.sh \
 	template.sh \
+	usage-class/ad_login.sh \
 	usage-class/ad_kdc.sh \
 	usage-class/default.sh \
 	usage-class/ipsec.sh
