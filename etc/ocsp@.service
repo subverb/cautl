@@ -1,0 +1,12 @@
+[Unit]
+Description=Cautl OCSP Resolver for user %i
+After=networking.service
+Conflicts=ocsp@%i.service
+ConditionPathIsDirectory=/home/%i/ocsp
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/bin/cautl ocspserver --dir /home/%i/ocsp
+Restart=always
+

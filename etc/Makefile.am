@@ -1,2 +1,3 @@
+dist_systemdsystemunit_DATA=ocsp@.service
 dist_sysconf_DATA=cautl
 dist_noinst_DATA=cautl.testdir

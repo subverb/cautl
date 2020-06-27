@@ -24,6 +24,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/list.sh \
 	subverb/ocspcert.sh \
 	subverb/ocspexport.sh \
+	subverb/ocspserver.sh \
 	subverb/personalize-card.sh \
 	subverb/revoke.sh \
 	subverb/selfsign.sh \
