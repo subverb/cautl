@@ -67,12 +67,13 @@ else
 fi
 
 declare defaultIFS=$IFS
+declare -a CLS_ARGS=("${SV_UNPARSED[@]}")
 IFS=,
 usage_classes="${USAGE_CLASS},${CA_ALL_USAGE}"
 for cls in ${usage_classes}; do
 	if [ -z "$cls" ]; then continue; fi
 	IFS=$defaultIFS
-	sv_backend --backend "usage-class" --mandatory $cls -- "${SV_UNPARSED[@]}"
+	sv_backend --backend "usage-class" --mandatory $cls -- "${CLS_ARGS[@]}"
 	IFS=,
 done
 KEY_USAGE="${!KEY_USAGES[*]}"
