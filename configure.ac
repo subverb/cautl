@@ -5,6 +5,18 @@ AC_PROG_SED
 AC_PROG_GREP
 PKG_PROG_PKG_CONFIG
 
+# ARG_WITH_SET(option, default, help)
+# -----------------------------------
+# Create a --with-$1 option with helptext, set a variable $1 to $withval/default
+AC_DEFUN([ARG_WITH_SET],
+        [AC_ARG_WITH(
+                [$1],
+                AS_HELP_STRING([--with-$1=arg], [$3 (default: $2).]),
+                patsubst([$1], [-], [_])="$withval",
+                patsubst([$1], [-], [_])=$2
+        )]
+)
+
 if test -n "$PKG_CONFIG"; then
 	systemdsystemunitdir_default=$($PKG_CONFIG --variable=systemdsystemunitdir systemd)
 fi
