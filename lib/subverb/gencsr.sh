@@ -18,6 +18,10 @@ OPT_IFNEXISTS=0
 SV_OPTION[if-not-exists]=":OPT_IFNEXISTS"
 SV_OPTION_HELP[OPT_IFNEXISTS]="don't create a csr (and exit silently), if it already exists"
 
+OPT_FROMKEY=0
+SV_OPTION[from-key]=":OPT_FROMKEY"
+SV_OPTION_HELP[OPT_FROMKEY]="Create a CSR for an existing key"
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -45,6 +49,11 @@ fi
 NAME=$($GETCACONF -f ${CAUTL_GENERATED_FILE} -k name).pem
 CSRDIR=$($GETCACONF  -f ${CAUTL_GENERATED_FILE} -k new_certs_dir)
 PRIVKEY=$($GETCACONF -f ${CAUTL_GENERATED_FILE} -k private_key)
+
+if [ ${OPT_FROMKEY} -gt 0 ]; then
+	openssl req -new -config ${CAUTL_GENERATED_FILE} -out $CSRDIR/$NAME -key $PRIVKEY -passin file:${PRIVKEY}.pwd "${CSR_ARGS[@]}"
+	exit $?
+fi
 
 if [ -f "${PRIVKEY}" ]; then
 	if [ ${OPT_IFNEXISTS} -gt 0 ]; then
