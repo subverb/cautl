@@ -22,6 +22,10 @@ OPT_FROMKEY=0
 SV_OPTION[from-key]=":OPT_FROMKEY"
 SV_OPTION_HELP[OPT_FROMKEY]="Create a CSR for an existing key"
 
+SV_OPTION[label]="OPT_LABEL"
+SV_OPTION_HELP[OPT_LABEL]="Define a different label for the CSR. Must include the type-prefix"
+
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -44,6 +48,12 @@ if [ -n "${OPT_NAME}${OPT_KEYLEN}${OPT_GROUP}" ]; then
 	generate_configfile ${CAUTL_GROUP}
 else
 	CAUTL_GENERATED_FILE=$OPENSSL_CONF
+fi
+
+declare -a CSR_ARGS
+if [ -n "${OPT_LABEL}" ]; then
+	CSR_ARGS[${#CSR_ARGS}]=-subj
+	CSR_ARGS[${#CSR_ARGS}]="/C=$CA_COUNTRY/O=$CA_ORG/$OPT_LABEL"
 fi
 
 NAME=$($GETCACONF -f ${CAUTL_GENERATED_FILE} -k name).pem
@@ -72,4 +82,4 @@ fi
 openssl rand -base64 32 > ${PRIVKEY}.pwd
 chmod 400 ${PRIVKEY}.pwd
 
-openssl req -new -config ${CAUTL_GENERATED_FILE} -out $CSRDIR/$NAME -keyout $PRIVKEY -passout file:${PRIVKEY}.pwd
+openssl req -new -config ${CAUTL_GENERATED_FILE} -out $CSRDIR/$NAME -keyout $PRIVKEY -passout file:${PRIVKEY}.pwd  "${CSR_ARGS[@]}"
