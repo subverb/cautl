@@ -2,6 +2,7 @@ cautl (1.0.3+nmu1) UNRELEASED; urgency=medium
 
   * local package
   * renew a smartcard-certificate
+  * check for retiring certificates
 
  -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Thu, 27 Nov 2020 12:40:25 +0200
 
