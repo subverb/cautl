@@ -1,6 +1,6 @@
 [submodule "subverb"]
 	path = subverb
-	url = http://git.dresden.micronet24.de/benjamin/subverb.git
+	url = http://git.dresden.micronet24.de/subverb/subverb.git
 [submodule "bulletproof-tls"]
 	path = bulletproof-tls
 	url = https://github.com/ivanr/bulletproof-tls.git
