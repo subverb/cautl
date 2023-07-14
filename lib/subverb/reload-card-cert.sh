@@ -10,6 +10,11 @@ CA_RESIGN=0
 SV_OPTION[resign]=":CA_RESIGN"
 SV_OPTION_HELP[CA_RESIGN]="sign the certificate, before loading it to the key"
 
+CA_SETPIN=0
+SV_OPTION[setpin]=":CA_SETPIN"
+SV_OPTION_HELP[CA_SETPIN]="(re-)set the smartcard pins as well"
+
+
 sv_parse_options "$@"
 
 if [ "$1" == "_help_source_" ]; then
@@ -59,6 +64,22 @@ local SO_PIN=$(check_pin SO-PIN "$CA_SO_PIN" $READER_SOPIN_MIN $READER_SOPIN_MAX
 local SO_PUK=$(check_pin SO-PUK "$CA_SO_PUK" $READER_SOPIN_MIN $READER_SOPIN_MAX)
 
 local DATADIR=$(sv_default_dir pkgdata)
+
+if [ $CA_SETPIN -gt 0 ]; then
+	CONFFILE="${PRIVDIR}/${CA_FILEBASENAME}.conf"
+	echo "Erasing card"
+	sv_backend --backend "$CARD_BACKEND" --optional erase -- $CONFFILE
+
+	echo "Setting pins"
+	if [ -n "$SO_PIN" ]; then
+		sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_SOPIN" --pin "$SO_PIN" --puk "$SO_PUK" --type so --conffile $CONFFILE
+	else
+		SO_PIN=$DEFAULT_SOPIN
+	fi
+	if [ -n "$PIN" ]; then
+		sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_PIN" --pin "$PIN" --puk "$PUK" --type user --conffile $CONFFILE
+	fi
+fi
 
 if [ "$CERT_GENERATION" = "onhost" ]; then
 	if [ $CA_RESIGN -gt 0 ]; then
