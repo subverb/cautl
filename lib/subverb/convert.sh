@@ -50,7 +50,7 @@ Supported input formats:
 
 Supported output formats:
 
-	pem der p12 zip
+	pem der p12 jks zip
 
 CA_LIST
 	return 0
@@ -62,6 +62,7 @@ _guess_certtype() {
 		*.der|*.crt|*.cer)	echo der;;
 		*.p12|*.pfx)		echo p12;;
 		*.zip)			echo zip;;
+		*.keystore|*.jks)	echo jks;;
 		*)			return 1;;
 	esac
 	return 0
@@ -138,7 +139,7 @@ if [ -n "$CA_OUTFILE" ]; then
 			fi
 			openssl rsa -outform pem -in "$CA_LOCAL_FILE" ${CA_PASSIN_ARG} -out "$CA_OUTFILE"
 			;;
-		p12|zip)
+		p12|zip|jks)
 			if [ -z "$CERT_NAME" ]; then
 				echo "automatic certificate relation handling cannot be done without a common certificate name" 1>&2
 				exit 1
@@ -149,8 +150,16 @@ if [ -n "$CA_OUTFILE" ]; then
 				CA_PASSIN_ARG="-passin file:${CA_LOCAL_PRIV}.pwd"
 			fi
 			case "${CA_TO}" in
-				p12)
+				jks)
+					CA_ORIG_OUTFILE="$CA_OUTFILE"
+					CA_OUTFILE="$(basename "$CA_OUTFILE").p12"
+					;&
+				p12|jks)
 					openssl pkcs12 -export -out "$CA_OUTFILE" -name "${CERT_NAME%%.pem}" -inkey "${CA_LOCAL_PRIV}" -in "${CA_LOCAL_CERT}" -certfile $($GETCACONF -k certificate) $CA_PASSIN_ARG $CA_PASSOUT_ARG
+					;;&
+				jks)
+					KT_PASSARG=$(echo "$CA_PASSOUT_ARG" | sed -e 's/-passout //;s/\(.*\):/:\1 /')
+					keytool -importkeystore -srckeystore "$CA_OUTFILE" -destkeystore "$CA_ORIG_OUTFILE"  -srcstoretype pkcs12 -deststoretype jks -srcstorepass${KT_PASSARG} -deststorepass${KT_PASSARG}
 					;;
 				zip)
 					zip "$CA_OUTFILE" "${CA_LOCAL_CERT}" "${CA_LOCAL_PRIV}" $($GETCACONF -k certificate)
