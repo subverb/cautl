@@ -58,7 +58,7 @@ case "${CERT_FILE}" in
 		openssl s_client -connect ${HOST}:${PROTO} </dev/null 2>/dev/null | sed -ne "/${PEM_SEPARATOR}BEGIN ${FILETYPE}${PEM_SEPARATOR}/,/${PEM_SEPARATOR}END ${FILETYPE}${PEM_SEPARATOR}/p" > "$CERT_FILE"
 		;;
 	*.pem|*.crt)
-		FILETYPE=$(grep -e "$PEM_SEPARATOR" "${CERT_FILE}" | head -n 1 | sed -e 's/-//g;s/^.*BEGIN\s*//i')
+		FILETYPE=$(grep -e "$PEM_SEPARATOR" "${CERT_FILE}" | head -n 1 | sed -e 's/-//g;s/^.*BEGIN\s*//i;s/\W*$//')
 		;;
 	*.p12|*.pfx)
 		FILETYPE="PKCS#12"
@@ -102,7 +102,7 @@ case "$FILETYPE" in
 			openssl crl -noout -in $CERT_FILE -CAfile "$CA_HOME/certs/${CERT_NAME}"
 		fi
 		;;
-	"CERTIFICATE REQUEST")
+	"CERTIFICATE REQUEST"|"NEW CERTIFICATE REQUEST")
 		OPENSSL_SUBCMD="req -verify"
 		;;
 	"PKCS#12")
