@@ -10,6 +10,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	card-opensc/erase.sh \
 	card-opensc/pushsignedkey.sh \
 	card-opensc/list.sh \
+	card-opensc/identify.sh \
 	cert-card/list.sh \
 	cert-openssl/list.sh \
 	readerconfig/gpgcard.sh \
