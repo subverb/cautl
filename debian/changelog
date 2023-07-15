@@ -1,4 +1,4 @@
-cautl (1.0.3+nmu1) UNRELEASED; urgency=medium
+cautl (1.0.3) bookworm bullseye; urgency=medium
 
   * local package
   * renew a smartcard-certificate
@@ -6,7 +6,7 @@ cautl (1.0.3+nmu1) UNRELEASED; urgency=medium
   * allow creation of CSR without key generation
   * export to java keystore
 
- -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Thu, 27 Nov 2020 12:40:25 +0200
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Sat, 15 Jul 2023 12:40:25 +0200
 
 cautl (1.0.2+nmu1) UNRELEASED; urgency=medium
 
