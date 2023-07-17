@@ -1,5 +1,3 @@
-[![pipeline status](https://git.dresden.micronet24.de/benjamin/cautl/badges/master/pipeline.svg)](https://git.dresden.micronet24.de/benjamin/cautl/commits/master)
-
 # Cautl #
 
 The *C*ertificate *A*uthority *UT*i*L*s should provide a reasonable toolset
@@ -19,7 +17,7 @@ Most of cautl is pure shell scripting, but to provide some functionality, the
 following software should be available on the machine before using cautl:
 
 * bash
-* subverb - https://git.dresden.micronet24.de/benjamin/subverb.git or the local submodule
+* subverb - https://git.dresden.micronet24.de/subverb/subverb.git or the local submodule
 * openssl
 * ruby
 * libengine-pkcs11-openssl (or libengine-pkcs11-openssl1.1 - depending on your openssl version)
