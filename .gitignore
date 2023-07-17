@@ -17,3 +17,10 @@ Makefile.in
 /missing
 /config.log
 /config.status
+/test-driver
+
+# test artefact
+.installed
+.present
+*.trs
+*.log
