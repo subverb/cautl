@@ -32,6 +32,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/revoke.sh \
 	subverb/selfsign.sh \
 	subverb/show.sh \
+	subverb/show-config.sh \
 	subverb/sign.sh \
 	template.sh \
 	usage-class/ad_login.sh \
