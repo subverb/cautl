@@ -13,6 +13,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	card-opensc/identify.sh \
 	cert-card/list.sh \
 	cert-openssl/list.sh \
+	cert-openssl/retiring.sh \
 	readerconfig/gpgcard.sh \
 	readerconfig/Nitrokey_Nitrokey_Pro.sh \
 	subverb-pre.sh \
@@ -29,6 +30,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/ocspserver.sh \
 	subverb/personalize-card.sh \
 	subverb/reload-card-cert.sh \
+	subverb/retiring.sh \
 	subverb/revoke.sh \
 	subverb/selfsign.sh \
 	subverb/show.sh \
