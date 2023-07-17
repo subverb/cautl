@@ -1,8 +1,14 @@
+cautl (1.0.4) bookworm bullseye; urgency=medium
+
+  * local package
+  * check for retiring certificates (wasn't packaged before)
+
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Mon, 17 Jul 2023 19:21:32 +0200
+
 cautl (1.0.3) bookworm bullseye; urgency=medium
 
   * local package
   * renew a smartcard-certificate
-  * check for retiring certificates
   * allow creation of CSR without key generation
   * export to java keystore
 
