@@ -146,6 +146,8 @@ PRIVDIR=$(dirname $($GETCACONF -k private_key))
 PREGEN_FILE=${CAUTL_GENERATED_FILE}
 template2tempfile $DATADIR < $DATADIR/personalize-card
 CONFFILE=${CAUTL_GENERATED_FILE}
+cp --backup=numbered $CONFFILE $PRIVDIR/$CA_FILEBASENAME.conf
+
 template2tempfile $DATADIR < $DATADIR/personalize-card.user
 cp --backup=numbered ${CAUTL_GENERATED_FILE} $PRIVDIR/$CA_FILEBASENAME.user.conf
 CAUTL_GENERATED_FILE=${PREGEN_FILE}
@@ -183,4 +185,3 @@ else
 	sv_backend --backend "$CARD_BACKEND" --optional getpubkey
 fi
 
-cp --backup=numbered $CONFFILE $PRIVDIR/$CA_FILEBASENAME.conf
