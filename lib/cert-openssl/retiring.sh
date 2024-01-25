@@ -1,6 +1,7 @@
 DIR=$($GETCACONF -k certs)
 REFDATE=$(date -d"+${SV_DAYS}days" +"%s")
 for i in $(ls $DIR/*.pem); do
+	SAN=""
 	CERTDATE=$(openssl x509 -enddate -noout -in $i | sed -e 's/.*=\s*//;s/\s*$//')
 	CERTREL=$(date +"%s" -d"${CERTDATE}")
 	SANOFFSET=$(sed -ne '/--- *BEGIN/,/--- *END/p' $i | openssl asn1parse -inform PEM | grep "X509v3 Subject Alternative Name" -A 1 | sed -e 's/:.*//' | tail -n 1)
