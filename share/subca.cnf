@@ -45,6 +45,9 @@ subjectAltName		= @sans
 <<if [ "0$NAMED_CONSTRAINTS" -gt 0 ]>>
 nameConstraints         = @name_constraints
 <<end>>
+<<if [ "0$CARD_ID" != "0" ]>>
+cautlCardID		= ASN1:UTF8String:<<CARD_ID>>
+<<end>>
 
 <<if [ "0$NAMED_CONSTRAINTS" -gt 0 ]>>
 [name_constraints]
