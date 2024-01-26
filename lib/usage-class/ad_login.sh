@@ -3,6 +3,13 @@ SV_OPTION_HELP[PRINCIPAL]="The name of the AD-prinicipal to authenticate"
 
 sv_parse_options "$@"
 
+if [ -z "${PRINCIPAL}" -a -n "${CERT}" -a -f "${CERT}" ]; then
+	SANOFFSET=$(sed -ne '/--- *BEGIN/,/--- *END/p' ${CERT} | openssl asn1parse -inform PEM | grep "X509v3 Subject Alternative Name" -A 1 | sed -e 's/:.*//' | tail -n 1)
+	if [ -n "$SANOFFSET" ]; then
+		PRINCIPAL=$(sed -ne '/--- *BEGIN/,/--- *END/p' ${CERT} | openssl asn1parse -inform PEM -strparse $SANOFFSET | sed -ne '/UTF8STRING/{s/.*UTF8STRING\s*://;p}')
+	fi
+fi
+
 if [ -z "$PRINCIPAL" ]; then
 	echo "Please specify the principal whom to authenticate using --principal" 1>&2
 	exit 1
