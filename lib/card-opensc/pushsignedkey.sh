@@ -46,6 +46,11 @@ while [ $UPLOADED == 0 -a $MAXCOUNT -gt 0 ]; do
 		UPLOADED=1
 	fi
 done
+
+if [ $RESET_READER_AFTER_KEYPUSH -gt 0 ]; then
+	opensc-tool --reset
+fi
+
 if [ $UPLOADED == 0 ]; then
 	grep "Failed to" "${ERROUTFILE}"
 	echo "Error not recovered after retry!" 1>&2
