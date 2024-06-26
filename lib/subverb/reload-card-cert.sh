@@ -33,11 +33,16 @@ if [ -z "$CARD_BACKEND" ]; then
 fi
 
 if [ -z "$CA_FILEBASENAME" ]; then
-	CA_FILEBASENAME=$(sv_backend --backend "$CARD_BACKEND" --mandatory identify)
-	CA_LABEL="CN=${CA_FILEBASENAME}"
-	if [ ! -f "${PRIVDIR}/${CA_FILEBASENAME}.conf" ]; then
-		CA_FILEBASENAME=$(basename -s ".${CA_DOMAIN}" "${CA_FILEBASENAME}" )
-	fi
+	for fn in $(sv_backend --backend "$CARD_BACKEND" --mandatory identify); do
+		CA_FILEBASENAME=$fn
+		CA_LABEL="CN=${CA_FILEBASENAME}"
+		if [ ! -f "${PRIVDIR}/${CA_FILEBASENAME}.conf" ]; then
+			CA_FILEBASENAME=$(basename -s ".${CA_DOMAIN}" "${CA_FILEBASENAME}" )
+		fi
+		if [ -f "${PRIVDIR}/${CA_FILEBASENAME}.conf" ]; then
+			break
+		fi
+	done
 else
 	CA_FILEBASENAME=$(basename -s ".pem" "${CA_FILEBASENAME}" )
 	CA_LABEL="CN=$(openssl x509 -text -noout -in "$($GETCACONF -k certs)/${CA_FILEBASENAME}.pem" | sed -ne '/Subject:/{s/.*CN\s*=\s*//;p}')"
