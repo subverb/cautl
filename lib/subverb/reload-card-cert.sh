@@ -99,7 +99,7 @@ if [ "$CERT_GENERATION" = "onhost" ]; then
 	fi
 	PIN=$PIN sv_call_subverb convert --type private --name $CA_FILEBASENAME.pem --to p12 --passout env:PIN #XXX add intermediate certificate
 	for i in "${READER_CERT_TARGET[@]}"; do
-		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i $pushargs
+		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i $pushargs || break
 	done
 else
 	echo "On-key update of certificates is untested" 1>&2
