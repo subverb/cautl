@@ -36,6 +36,9 @@ while [ $UPLOADED == 0 -a $MAXCOUNT -gt 0 ]; do
 			ignore)
 				UPLOADED=1
 				;;
+			reset-card)
+				opensc-tool --reset
+				;;
 			*)
 				echo "$ERRSTR" 1>&2
 				echo "Error pushing certificate to card!" 1>&2
