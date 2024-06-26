@@ -69,6 +69,7 @@ local SO_PIN=$(check_pin SO-PIN "$CA_SO_PIN" $READER_SOPIN_MIN $READER_SOPIN_MAX
 local SO_PUK=$(check_pin SO-PUK "$CA_SO_PUK" $READER_SOPIN_MIN $READER_SOPIN_MAX)
 
 local DATADIR=$(sv_default_dir pkgdata)
+local pushargs=""
 
 if [ $CA_SETPIN -gt 0 ]; then
 	CONFFILE="${PRIVDIR}/${CA_FILEBASENAME}.conf"
@@ -84,6 +85,8 @@ if [ $CA_SETPIN -gt 0 ]; then
 	if [ -n "$PIN" ]; then
 		sv_backend --backend "$CARD_BACKEND" --mandatory set-pin -- --current "$DEFAULT_PIN" --pin "$PIN" --puk "$PUK" --type user --conffile $CONFFILE
 	fi
+else
+	pushargs="--no-key"
 fi
 
 if [ "$CERT_GENERATION" = "onhost" ]; then
@@ -96,7 +99,7 @@ if [ "$CERT_GENERATION" = "onhost" ]; then
 	fi
 	PIN=$PIN sv_call_subverb convert --type private --name $CA_FILEBASENAME.pem --to p12 --passout env:PIN #XXX add intermediate certificate
 	for i in "${READER_CERT_TARGET[@]}"; do
-		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i
+		sv_backend --backend "$CARD_BACKEND" --mandatory pushsignedkey -- $i $pushargs
 	done
 else
 	echo "On-key update of certificates is untested" 1>&2
