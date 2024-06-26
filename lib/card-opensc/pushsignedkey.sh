@@ -36,6 +36,12 @@ while [ $UPLOADED == 0 -a $MAXCOUNT -gt 0 ]; do
 			ignore)
 				UPLOADED=1
 				;;
+			reset-card-or-ignore)
+				if [ $MAXCOUNT -lt 3 ]; then
+					UPLOADED=1
+			       		break
+				fi	
+				;&
 			reset-card)
 				opensc-tool --reset
 				;;
