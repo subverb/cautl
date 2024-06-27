@@ -8,7 +8,7 @@ Homepage: http://dresden.micronet24.de/projects/cautl
 
 Package: cautl
 Architecture: all
-Depends: ${misc:Depends}, subverb (>=1.2), ruby (>=2.3.3), openssl (>=1.1.0)
+Depends: ${misc:Depends}, subverb (>=1.2.1), ruby (>=2.3.3), openssl (>=1.1.0)
 Description: certificate authority utils
  By providing a simpler configuration interface and a couple
  of subcommands for the most common task, this tries to be
