@@ -18,6 +18,7 @@ nobase_dist_ctllib_SCRIPTS= \
 	readerconfig/Nitrokey_Nitrokey_Pro.sh \
 	subverb-pre.sh \
 	subverb-configured.sh \
+	subverb-post.sh \
 	subverb/convert.sh \
 	subverb/genconf.sh \
 	subverb/gencrl.sh \
@@ -36,6 +37,14 @@ nobase_dist_ctllib_SCRIPTS= \
 	subverb/show.sh \
 	subverb/show-config.sh \
 	subverb/sign.sh \
+	subverb/sync.sh \
+	subverb-pre.d/00.sync.sh \
+	subverb-configured.d/00.sync.sh \
+	subverb-post.d/99.sync.sh \
+	subverb/sign-post.d/99.sync.sh \
+	subverb/list-pre.d/00.sync.sh \
+	subverb/retiring-pre.d/00.sync.sh \
+	subverb/reload-card-cert-pre.d/00.sync.sh \
 	template.sh \
 	usage-class/ad_login.sh \
 	usage-class/ad_kdc.sh \

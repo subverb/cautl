@@ -2,8 +2,9 @@ cautl (1.0.4) bookworm bullseye; urgency=medium
 
   * local package
   * check for retiring certificates (wasn't packaged before)
+  * automatically syncronize certificates with external folder (via plugin)
 
- -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Mon, 17 Jul 2023 19:21:32 +0200
+ -- Benjamin Tietz <benjamin@dresden.micronet24.de>  Fri, 28 Jul 2024 19:21:32 +0200
 
 cautl (1.0.3) bookworm bullseye; urgency=medium
 

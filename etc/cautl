@@ -48,3 +48,15 @@ export CA_VLD_DAYS_CRL=90
 ## 2: disallow IPv4 addresses
 ## 4: disallow IPv6 addresses
 # export NAMED_CONSTRAINTS=1
+
+## automatically sync certificates to an external directory
+##
+## is enabled, unless the setting is empty. This will need the sync-plugin being installed
+# export CA_SYNC_DIRECTORY="/srv/ca"
+
+## perform an action, before syncronization is performed
+# export CA_SYNC_PRE="sshfs remote:/cadir /srv/ca"
+
+## perform an action, after syncronization is performed
+# export CA_SYNC_POST="umount /srv/ca"
+

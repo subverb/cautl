@@ -1,0 +1,8 @@
+/usr/lib/cautl/subverb/sync.sh
+/usr/lib/cautl/subverb-pre.d/00.sync.sh
+/usr/lib/cautl/subverb-post.d/99.sync.sh
+/usr/lib/cautl/subverb-configured.d/00.sync.sh
+/usr/lib/cautl/subverb/sign-post.d/99.sync.sh
+/usr/lib/cautl/subverb/list-pre.d/00.sync.sh
+/usr/lib/cautl/subverb/retiring-pre.d/00.sync.sh
+/usr/lib/cautl/subverb/reload-card-cert-pre.d/00.sync.sh

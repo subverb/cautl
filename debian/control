@@ -13,3 +13,12 @@ Description: certificate authority utils
  By providing a simpler configuration interface and a couple
  of subcommands for the most common task, this tries to be
  tool for running a certificate authority
+
+Package: cautl-sync
+Architecture: all
+Depends: ${misc:Depends}, cautl (>=1.0.4)
+Description: syncronization plugin for certificate authority utils
+  Extending cautl with the sync subverb, to automatically backup and retrieve certificates
+  from an external location
+
+

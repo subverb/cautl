@@ -1,0 +1,1 @@
+../list-pre.d/00.sync.sh
